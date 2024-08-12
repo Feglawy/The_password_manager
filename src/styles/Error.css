@@ -1,0 +1,13 @@
+#error {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+#error > h1 {
+	font-size: 5vw;
+}
+#error > p {
+	font-size: large;
+}

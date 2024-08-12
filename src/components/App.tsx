@@ -1,29 +1,53 @@
+import { ReactNode } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "../styles/App.css";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Websites from "./Websites";
-import Add from "./Add";
+import Add from "./AddNewWebsite/Add";
+import Error from "./Error";
 
-const router = createBrowserRouter([
-	{
-		path: "",
-		element: <Websites />,
-	},
-	{
-		path: "/add",
-		element: <Add />,
-	},
-]);
+interface LayoutProps {
+	children: ReactNode;
+}
 
-function App() {
+// Layout component to include SideBar and TopBar
+const Layout = ({ children }: LayoutProps) => {
 	return (
 		<>
 			<TopBar />
 			<SideBar />
-			<RouterProvider router={router} />
+			<>{children}</>
 		</>
 	);
+};
+
+const router = createBrowserRouter([
+	{
+		path: "",
+		element: (
+			<Layout>
+				<Websites />
+			</Layout>
+		),
+		errorElement: (
+			<Layout>
+				<Error />
+			</Layout>
+		),
+	},
+	{
+		path: "/add",
+		element: (
+			<Layout>
+				<Add />
+			</Layout>
+		),
+	},
+]);
+
+function App() {
+	return <RouterProvider router={router} />;
 }
 
 export default App;
