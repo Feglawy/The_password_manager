@@ -1,0 +1,78 @@
+.sidebar {
+	grid-area: 1 / 1 / 3 / 2;
+}
+
+.sidebar {
+	color: var(--text);
+	padding: 15px;
+	box-shadow: var(--accent) 0px 0px 6px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-content: center;
+	justify-content: space-around;
+	align-items: center;
+	background-color: var(--sidebar);
+	border-radius: 8px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+}
+
+.logo {
+	width: 100px;
+	height: 100px;
+	background-image: url("/logo.svg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.links {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	align-content: center;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.links a {
+	font-size: 1.5rem;
+	color: var(--text);
+	text-decoration: none;
+	width: 80%;
+	font-weight: bold;
+	grid-template-columns: 1fr 30px;
+	display: inline-grid;
+	align-items: center;
+	justify-content: center;
+	align-content: stretch;
+	justify-items: stretch;
+	margin: 10px 0;
+	transition: ease-in-out 0.1s;
+	border-radius: 15px;
+	padding: 15px;
+	letter-spacing: 2px;
+}
+
+.links a:hover {
+	background-color: var(--accent);
+	transition: ease-out 0.3s;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.links a.active::after {
+	content: "";
+	width: 30px;
+	height: 30px;
+	background-image: url("../assets/arrow.svg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	fill: var(--text);
+	background-color: var(--accent);
+	border-radius: 10px;
+	box-shadow: black 3px 4px;
+	margin-left: 10px;
+}

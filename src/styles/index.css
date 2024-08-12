@@ -1,0 +1,81 @@
+[data-theme="light"] {
+	--text: #0b141d;
+	--background: #f0f4f9;
+	--primary: #2a446a;
+	--secondary: #ac87cf;
+	--accent: #9440a0;
+	--sidebar: #e4cfe1bf;
+	--glass-bg-color: rgba(255, 255, 255, 0.48);
+}
+[data-theme="dark"] {
+	--text: #e0e9f3;
+	--background: #060a10;
+	--primary: #96afd5;
+	--secondary: #542f77;
+	--accent: #b25ebf;
+	--sidebar: #4e434854;
+	--glass-bg-color: rgba(17, 25, 40, 0.48);
+}
+
+:root {
+	--text: var(--text);
+	--background: var(--background);
+	--primary: var(--primary);
+	--secondary: var(--secondary);
+	--accent: var(--accent);
+}
+
+@font-face {
+	font-family: "josefin_sans";
+	src: url("/JosefinSans-VariableFont_wght.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+html {
+	font-family: "josefin_sans";
+}
+
+body[data-theme="dark"] {
+	background-color: hsla(216, 45%, 4%, 1);
+	background-image: radial-gradient(
+			at 89% 56%,
+			hsla(216, 100%, 32%, 1) 0px,
+			transparent 50%
+		),
+		radial-gradient(at 40% 84%, hsla(256, 100%, 32%, 1) 0px, transparent 50%),
+		radial-gradient(at 77% 16%, hsla(331, 100%, 32%, 1) 0px, transparent 50%),
+		radial-gradient(at 84% 88%, hsla(213, 100%, 32%, 1) 0px, transparent 50%);
+}
+body[data-theme="light"] {
+	background-color: #cf99ff;
+	background-image: radial-gradient(
+			at 80% 19%,
+			hsla(280, 98%, 75%, 1) 0px,
+			transparent 50%
+		),
+		radial-gradient(at 31% 95%, hsla(186, 82%, 61%, 1) 0px, transparent 50%),
+		radial-gradient(at 68% 64%, hsla(189, 89%, 70%, 1) 0px, transparent 50%),
+		radial-gradient(at 83% 64%, hsla(25, 62%, 78%, 1) 0px, transparent 50%),
+		radial-gradient(at 56% 66%, hsla(256, 62%, 66%, 1) 0px, transparent 50%),
+		radial-gradient(at 92% 12%, hsla(331, 62%, 63%, 1) 0px, transparent 50%),
+		radial-gradient(at 88% 4%, hsla(213, 78%, 60%, 1) 0px, transparent 50%);
+}
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#root {
+	display: grid;
+	grid-template-columns: 250px 1fr;
+	grid-template-rows: 0.2fr 1.8fr;
+	gap: 0px 20px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"sidebar top-bar"
+		"sidebar main-content";
+	height: 100vh;
+	color: var(--text);
+	overflow: hidden;
+}
