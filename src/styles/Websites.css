@@ -1,0 +1,11 @@
+.main-content {
+	grid-area: "main-content";
+}
+.main-content {
+	display: flex;
+	flex-wrap: wrap;
+	overflow-y: auto;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}

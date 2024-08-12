@@ -1,0 +1,47 @@
+.website {
+	border-radius: 18px !important;
+	background: transparent !important;
+	filter: saturate(140%);
+	backdrop-filter: blur(33px);
+	width: 10rem;
+	padding: 10px;
+	margin: 1rem;
+	box-shadow: #593f5da1 5px 3px 20px 0px;
+	transition: all 0.2s ease;
+	cursor: pointer;
+	text-decoration: none;
+	color: var(--text);
+}
+
+.website:hover {
+	transform: rotate(2deg);
+	scale: 1.05;
+	transition: all 0.2s ease;
+}
+
+.website > .website-name {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+	font-weight: 200;
+	letter-spacing: 2px;
+	opacity: 0;
+	max-height: 0;
+	transition: all 0.3s ease;
+}
+
+.website:hover .website-name {
+	transition: all 0.3s ease;
+	opacity: 1;
+	max-height: 40px;
+}
+
+.website-logo > img {
+	width: 35%;
+	margin: auto;
+	display: block;
+	padding: 10px;
+	border-radius: 38% /40%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
