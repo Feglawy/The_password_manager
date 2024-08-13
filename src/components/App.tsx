@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "../styles/App.css";
 import SideBar from "./SideBar";
-import TopBar from "./TopBar";
+import TopBar from "./TopBar/TopBar";
 import Websites from "./Websites";
 import Add from "./AddNewWebsite/Add";
 import Error from "./Error";

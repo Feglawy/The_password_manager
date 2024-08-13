@@ -1,5 +1,5 @@
 import SearchBar from "./SearchBar";
-import "../styles/TopBar.css";
+import "../../styles/TopBar.css";
 
 const TopBar = () => {
 	return (
