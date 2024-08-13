@@ -1,7 +1,7 @@
 import Website from "./Website";
-import "../styles/Websites.css";
+import "../styles/Accounts.css";
 
-const Websites = () => {
+const Accounts = () => {
 	return (
 		<>
 			<Website websiteName="FaceBook" />
@@ -10,4 +10,4 @@ const Websites = () => {
 	);
 };
 
-export default Websites;
+export default Accounts;

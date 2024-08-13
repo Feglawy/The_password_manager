@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "../styles/App.css";
 import SideBar from "./SideBar";
 import TopBar from "./TopBar/TopBar";
-import Websites from "./Websites";
+import Accounts from "./Accounts";
 import Add from "./AddNewWebsite/Add";
 import Error from "./Error";
 
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
 		path: "",
 		element: (
 			<Layout>
-				<Websites />
+				<Accounts />
 			</Layout>
 		),
 		errorElement: (
@@ -43,6 +43,9 @@ const router = createBrowserRouter([
 				<Add />
 			</Layout>
 		),
+	},
+	{
+		path: "/:website",
 	},
 ]);
 
