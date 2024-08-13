@@ -1,21 +1,24 @@
 import ThemeToggler from "./ThemeToggler";
 import "../styles/SideBar.css";
-import { useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const SideBar = () => {
-	const location = useLocation();
-	const isActive = (path: string) => location.pathname === path;
-
 	return (
 		<div className="sidebar">
 			<a className="logo" href="/"></a>
 			<div className="links">
-				<a href="/" className={isActive("/") ? "active" : ""}>
+				<NavLink
+					to="/"
+					className={({ isActive }) => (isActive ? "active" : "")}
+				>
 					Accounts
-				</a>
-				<a href="/add" className={isActive("/add") ? "active" : ""}>
+				</NavLink>
+				<NavLink
+					to="/add"
+					className={({ isActive }) => (isActive ? "active" : "")}
+				>
 					Add
-				</a>
+				</NavLink>
 			</div>
 			<ThemeToggler />
 		</div>
