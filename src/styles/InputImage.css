@@ -1,0 +1,11 @@
+#default-icon {
+	background-image: url("/world-wide-web.svg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 128px;
+	height: 128px;
+}
+
+body[data-theme="dark"] #default-icon {
+	filter: invert(1);
+}
