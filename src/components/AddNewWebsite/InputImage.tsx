@@ -36,22 +36,39 @@ const InputImage = () => {
 	}, []);
 
 	return (
-		<div id="website-icon" onClick={performClick} style={{ cursor: "pointer" }}>
-			<img
-				id="image-preview"
-				ref={imagePreviewRef}
-				src="#"
-				alt="Image Preview"
-				style={{ display: "none", height: "128px", width: "128px" }}
-			/>
-			<input
-				type="file"
-				id="img-input"
-				ref={imgInputRef}
-				accept="image/*"
-				style={{ display: "none" }}
-			/>
-			<div id="default-icon" ref={defaultIconRef}></div>
+		<div
+			style={{
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
+			}}
+		>
+			<div
+				id="website-icon"
+				onClick={performClick}
+				style={{ cursor: "pointer" }}
+			>
+				<img
+					id="image-preview"
+					ref={imagePreviewRef}
+					src="#"
+					alt="Image Preview"
+					style={{
+						display: "none",
+						height: "128px",
+						width: "128px",
+						borderRadius: "38% / 40%",
+					}}
+				/>
+				<input
+					type="file"
+					id="img-input"
+					ref={imgInputRef}
+					accept="image/*"
+					style={{ display: "none" }}
+				/>
+				<div id="default-icon" ref={defaultIconRef}></div>
+			</div>
 		</div>
 	);
 };
