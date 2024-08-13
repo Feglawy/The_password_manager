@@ -1,4 +1,4 @@
-import "../styles/Website.css";
+import "../../styles/Website.css";
 
 interface WebsiteProps {
 	websiteName: string;

@@ -1,4 +1,4 @@
-import Website from "./Website";
+import Website from "./Website/Website";
 import "../styles/Accounts.css";
 
 const Accounts = () => {

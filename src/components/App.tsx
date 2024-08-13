@@ -6,6 +6,7 @@ import TopBar from "./TopBar/TopBar";
 import Accounts from "./Accounts";
 import Add from "./AddNewWebsite/Add";
 import Error from "./Error";
+import WebsiteRegisteredPasswords from "./Website/WebsiteRegisteredPasswords";
 
 interface LayoutProps {
 	children: ReactNode;
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/:website",
+		element: (
+			<Layout>
+				<WebsiteRegisteredPasswords />
+			</Layout>
+		),
 	},
 ]);
 
