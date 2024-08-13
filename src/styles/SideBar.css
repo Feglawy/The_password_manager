@@ -46,15 +46,15 @@
 	font-weight: bold;
 	grid-template-columns: 1fr 30px;
 	display: inline-grid;
-	align-items: center;
 	justify-content: center;
 	align-content: stretch;
-	justify-items: stretch;
+	justify-items: start;
 	margin: 10px 0;
 	transition: ease-in-out 0.1s;
 	border-radius: 15px;
 	padding: 15px;
 	letter-spacing: 2px;
+	align-items: end;
 }
 
 .links a:hover {

@@ -1,0 +1,27 @@
+.btn {
+	align-items: center;
+	background-image: linear-gradient(112deg, #af40ff, #5b42f3 75%, #0eddeb);
+	border: 0;
+	border-radius: 8px;
+	box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+	box-sizing: border-box;
+	color: #ffffff;
+	display: flex;
+	font-family: Phantomsans, sans-serif;
+	font-size: 18px;
+	justify-content: center;
+	line-height: 1em;
+	max-width: 100%;
+	min-width: 115px;
+	padding: 15px 0px;
+	text-decoration: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.btn:hover {
+	outline: 0;
+}
