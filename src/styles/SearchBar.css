@@ -7,6 +7,7 @@
 	align-content: center;
 	justify-content: center;
 	align-items: center;
+	width: 50%;
 }
 .search-wrapper .disclaimer {
 	bottom: 15px;
@@ -57,7 +58,7 @@
 .input-group .search:focus {
 	padding: 10px;
 	height: 25px;
-	width: 50vw;
+	width: 37vw;
 	font-size: larger;
 	border-radius: 3px;
 	color: var(--text);
