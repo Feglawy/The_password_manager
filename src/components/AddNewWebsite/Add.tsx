@@ -1,4 +1,4 @@
-import Input from "./Input";
+import Input from "../Input";
 import InputImage from "./InputImage";
 import PasswordContainer from "./PasswordContainer";
 import "../../styles/AddNew.css";
@@ -7,7 +7,7 @@ import Button from "./Button";
 
 function Add() {
 	return (
-		<>
+		<div className="main-content">
 			<form action="" method="post">
 				<InputImage />
 				<Input label="Username" id="username-inp" className="w-90" />
@@ -18,7 +18,7 @@ function Add() {
 				<PasswordContainer className="w-90" />
 				<Button children="Submit" type="submit" />
 			</form>
-		</>
+		</div>
 	);
 }
 
