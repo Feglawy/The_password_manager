@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Input from "./Input";
+import Input from "../Input";
 
 import "../../styles/PasswordContainer.css";
 
