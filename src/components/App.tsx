@@ -18,7 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
 		<>
 			<TopBar />
 			<SideBar />
-			<div className="main-content">{children}</div>
+			{children}
 		</>
 	);
 };

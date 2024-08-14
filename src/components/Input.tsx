@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import "../../styles/Input.css";
+import "../styles/Input.css";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
