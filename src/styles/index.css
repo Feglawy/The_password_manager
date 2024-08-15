@@ -80,3 +80,7 @@ body {
 	color: var(--text);
 	overflow: hidden;
 }
+
+::-webkit-scrollbar {
+	display: none;
+}
