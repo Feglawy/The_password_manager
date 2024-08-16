@@ -44,7 +44,7 @@
 	text-decoration: none;
 	width: 80%;
 	font-weight: bold;
-	grid-template-columns: 1fr 30px;
+	grid-template-columns: 35px 1fr 30px;
 	display: inline-grid;
 	justify-content: center;
 	align-content: stretch;
