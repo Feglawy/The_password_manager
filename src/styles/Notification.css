@@ -1,0 +1,22 @@
+.notification {
+	display: flex;
+	align-items: center;
+	padding: 16px;
+	margin: 16px 0;
+	border-radius: 15px;
+	font-weight: bold;
+	color: white;
+	max-width: 256px;
+	text-align: center;
+}
+
+.notification-icon {
+	margin-right: 8px;
+	font-size: 56px;
+	height: 56px;
+}
+
+.notification-message {
+	flex: 1;
+	font-size: larger;
+}
