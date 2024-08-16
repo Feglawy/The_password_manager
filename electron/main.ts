@@ -36,7 +36,7 @@ function createWindow() {
 			preload: path.join(__dirname, "preload.mjs"),
 		},
 	});
-	win.setMenu(null);
+	// win.setMenu(null);
 	win.webContents.setWindowOpenHandler(({ url }) => {
 		// open url in a browser and prevent default
 		shell.openExternal(url);
