@@ -25,24 +25,38 @@ const DropDownMenu = ({ items }: DropDownProps) => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, []);
+
+	const handleOperation = (item: { label: string; onClick: () => void }) => {
+		item.onClick();
+		setIsOpen(false);
+	};
+
 	return (
 		<div ref={dropdownRef} className="dropdown">
 			<div onClick={toggleDropDown}>
 				<ThreeDots style={{ width: "32px", height: "32px" }} />
 			</div>
-			{isOpen && (
-				<ul className="dropdown-menu" style={{ top: "10px", zIndex: "1000" }}>
-					{items.map((item, index) => (
-						<li
-							key={index}
-							onClick={item.onClick}
-							style={{ listStyle: "none", cursor: "pointer", padding: "15px" }}
-						>
-							{item.label}
-						</li>
-					))}
-				</ul>
-			)}
+			<div
+				className={`dropdown-menu ${isOpen ? "" : "hidden"}`}
+				style={{ top: "10px", zIndex: "1000" }}
+			>
+				{items.map((item, index) => (
+					<button
+						key={index}
+						className="dropdown-menu-button"
+						onClick={() => {
+							handleOperation(item);
+						}}
+						style={{
+							listStyle: "none",
+							cursor: "pointer",
+
+						}}
+					>
+						{item.label}
+					</button>
+				))}
+			</div>
 		</div>
 	);
 };
