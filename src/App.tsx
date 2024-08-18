@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "../styles/App.css";
-import SideBar from "./SideBar";
-import TopBar from "./TopBar/TopBar";
-import Accounts from "./Accounts";
-import Add from "./AddNewWebsite/Add";
-import Error from "./Error";
-import WebsiteRegisteredPasswords from "./Website/WebsiteRegisteredPasswords";
+import "./styles/App.css";
+import SideBar from "./components/SideBar";
+import TopBar from "./components/TopBar/TopBar";
+import Accounts from "./components/Accounts";
+import Add from "./components/AddNewWebsite/Add";
+import Error from "./components/Error";
+import WebsiteRegisteredPasswords from "./components/Website/WebsiteRegisteredPasswords";
 
 interface LayoutProps {
 	children: ReactNode;
