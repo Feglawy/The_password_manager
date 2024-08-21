@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../styles/Notification.css";
+import "../../styles/utils.css";
 import { CheckLg, Cone, Exclamation, XLg } from "react-bootstrap-icons";
 
 type NotificationProps = {
@@ -27,7 +28,7 @@ const Notification = ({ type, message }: NotificationProps) => {
 
 	return (
 		<div
-			className={`notification notification-${type} ${
+			className={`notification notification-${type} fade-in ${
 				fadeOut ? "fade-out" : ""
 			}`}
 			style={{ backgroundColor: color }}

@@ -12,7 +12,17 @@ const NotificationCenter = ({ notifications }: NotificationCenterProps) => {
 	return (
 		<div
 			className="notification-center"
-			style={{ position: "absolute", top: "7%", right: "5%" }}
+			style={{
+				position: "absolute",
+				top: "7%",
+				display: "flex",
+				right: "5%",
+				flexDirection: "column-reverse",
+				flexWrap: "wrap",
+				alignContent: "center",
+				justifyContent: "center",
+				alignItems: "center",
+			}}
 		>
 			{notifications.map(({ id, type, message }) => (
 				<Notification key={id} type={type} message={message} />
