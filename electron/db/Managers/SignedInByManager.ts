@@ -18,6 +18,18 @@ class SignedInByManager {
 		);
 		return select.all(website_id) as SignedInBy[];
 	}
+
+	public editSignedInBy({ id, website_id, account_id }: SignedInBy) {
+		const stmt = this.db.prepare(
+			`UPDATE signedInBy SET website_id = ? account_id = ? WHERE id = ?`
+		);
+		stmt.run(id, website_id, account_id);
+	}
+
+	public deleteSignedInBy(website_id: string) {
+		const del = this.db.prepare(`DELETE FROM SignedInBy Where id = ?`);
+		del.run(website_id);
+	}
 }
 
 export default SignedInByManager;

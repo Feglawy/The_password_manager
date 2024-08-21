@@ -26,19 +26,27 @@ class WebsiteManager {
 		}
 	}
 
+	public editWebsite({ id, name, url, iconSrc, description }: Website) {
+		try {
+			const insert = this.db.prepare(
+				`UPDATE websites set name = ?, url = ?, icon = ?, description = ? WHERE id = ?`
+			);
+			insert.run(name, url, iconSrc, description, id);
+		} catch (error) {
+			if (
+				error instanceof Error &&
+				error.message.includes("UNIQUE constraint failed")
+			) {
+				console.error(`Website with name "${name}" already exists.`);
+			} else {
+				console.error("Error adding website:", error);
+			}
+		}
+	}
+
 	public getAllWebsites(): Website[] {
 		const select = this.db.prepare("SELECT * FROM websites");
 		return select.all() as Website[];
-	}
-
-	public getWebsite(websiteName: string): Website | undefined {
-		try {
-			const select = this.db.prepare("SELECT * FROM websites WHERE name = ?");
-			return select.get(websiteName) as Website | undefined;
-		} catch (error) {
-			console.error("Error fetching website:", error);
-			return undefined;
-		}
 	}
 
 	public searchWebsite(WebsiteName: string): Website[] | undefined {
@@ -50,6 +58,35 @@ class WebsiteManager {
 		} catch (error) {
 			console.error("Error fetching website:", error);
 			return undefined;
+		}
+	}
+
+	public getWebsiteByName(websiteName: string): Website | undefined {
+		try {
+			const select = this.db.prepare("SELECT * FROM websites WHERE name = ?");
+			return select.get(websiteName) as Website | undefined;
+		} catch (error) {
+			console.error("Error fetching website:", error);
+			return undefined;
+		}
+	}
+
+	public getWebsite(website_id: number): Website | undefined {
+		try {
+			const select = this.db.prepare("SELECT * FROM websites WHERE id = ?");
+			return select.get(website_id) as Website | undefined;
+		} catch (error) {
+			console.error("Error fetching website:", error);
+			return undefined;
+		}
+	}
+
+	public deleteWebsite(website_id: number) {
+		try {
+			const del = this.db.prepare(`DELETE FROM websites WHERE id = ?`);
+			del.run(website_id);
+		} catch (error) {
+			console.error("Error deleting website:", error);
 		}
 	}
 }
