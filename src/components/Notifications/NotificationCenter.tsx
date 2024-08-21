@@ -18,10 +18,14 @@ const NotificationCenter = ({ notifications }: NotificationCenterProps) => {
 				display: "flex",
 				right: "5%",
 				flexDirection: "column-reverse",
-				flexWrap: "wrap",
+				flexWrap: "nowrap",
 				alignContent: "center",
 				justifyContent: "center",
 				alignItems: "center",
+				maxHeight: "400px",
+				zIndex: "1000000",
+				overflow: "hidden",
+				maskImage: "linear-gradient(180deg, #000 60%, transparent)",
 			}}
 		>
 			{notifications.map(({ id, type, message }) => (
