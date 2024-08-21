@@ -1,4 +1,5 @@
-import "../styles/Notification.css";
+import { useEffect, useState } from "react";
+import "../../styles/Notification.css";
 import { CheckLg, Cone, Exclamation, XLg } from "react-bootstrap-icons";
 
 type NotificationProps = {
@@ -17,14 +18,21 @@ const Notification = ({ type, message }: NotificationProps) => {
 	const { icon, color } =
 		notificationConfig[type] || notificationConfig.default;
 
+	const [fadeOut, setFadeOut] = useState(false);
+
+	useEffect(() => {
+		const timer = setTimeout(() => setFadeOut(true), 2500);
+		return () => clearTimeout(timer);
+	}, []);
+
 	return (
 		<div
-			className={`notification notification-${type}`}
+			className={`notification notification-${type} ${
+				fadeOut ? "fade-out" : ""
+			}`}
 			style={{ backgroundColor: color }}
 		>
-			<span className="notification-icon" >
-				{icon}
-			</span>
+			<span className="notification-icon">{icon}</span>
 			{message && <span className="notification-message">{message}</span>}
 		</div>
 	);

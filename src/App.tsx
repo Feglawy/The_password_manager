@@ -7,6 +7,7 @@ import Accounts from "./components/Accounts";
 import Add from "./components/AddNewWebsite/Add";
 import Error from "./components/Error";
 import WebsiteRegisteredPasswords from "./components/Website/WebsiteRegisteredPasswords";
+import { NotificationProvider } from "./context/NotificationContext";
 
 interface LayoutProps {
 	children: ReactNode;
@@ -18,7 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
 		<>
 			<TopBar />
 			<SideBar />
-			{children}
+			<NotificationProvider>{children}</NotificationProvider>
 		</>
 	);
 };
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
 		element: (
 			<Layout>
 				<WebsiteRegisteredPasswords />
+			</Layout>
+		),
+		errorElement: (
+			<Layout>
+				<Error />
 			</Layout>
 		),
 	},

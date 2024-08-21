@@ -3,6 +3,7 @@ import PasswordContainer from "./PasswordContainer";
 import "../../styles/RegisteredPassword.css";
 import DropDownMenu from "../DropDownMenu";
 import { copyToClipboard } from "../../Utils";
+import { useNotification } from "../../context/NotificationContext";
 
 interface Account {
 	serviceImgSrc?: string;
@@ -11,11 +12,15 @@ interface Account {
 }
 
 const RegisteredPassword = ({ serviceImgSrc, username, password }: Account) => {
+	const { addNotification } = useNotification();
+
 	const handleCopy = () => {
 		try {
 			copyToClipboard(username + ":" + password);
+			addNotification("success", "Account data copied successfully");
 		} catch (error) {
 			console.error("Could not copy text:", error);
+			addNotification("error", "Could not copy account data");
 		}
 	};
 	const handleDelete = () => console.log("Delete clicked");

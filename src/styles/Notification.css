@@ -8,6 +8,7 @@
 	color: white;
 	max-width: 256px;
 	text-align: center;
+	transition: all 0.5s ease;
 }
 
 .notification-icon {
@@ -19,4 +20,9 @@
 .notification-message {
 	flex: 1;
 	font-size: larger;
+}
+
+.fade-out {
+	opacity: 0;
+	transform: scale(0);
 }
