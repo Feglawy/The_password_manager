@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS accounts (
     FOREIGN KEY (
         website_id
     )
-    REFERENCES websites (id) 
+    REFERENCES websites (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS signedInBy (
@@ -32,11 +32,11 @@ CREATE TABLE IF NOT EXISTS signedInBy (
     FOREIGN KEY (
         website_id
     )
-    REFERENCES websites (id),
+    REFERENCES websites (id) ON DELETE CASCADE,
     FOREIGN KEY (
         account_id
     )
-    REFERENCES accounts (id) 
+    REFERENCES accounts (id) ON DELETE CASCADE
 );
 
 
