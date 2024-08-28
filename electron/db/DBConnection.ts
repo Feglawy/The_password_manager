@@ -18,5 +18,3 @@ class DBConnection {
 }
 
 export default DBConnection;
-
-
