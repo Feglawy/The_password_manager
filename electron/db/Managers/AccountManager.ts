@@ -1,6 +1,7 @@
 import { Database, RunResult } from "better-sqlite3";
 import { Account } from "../types";
 import { DatabaseError, OperationResult } from "../utils";
+import { decryptPassword, encryptPassword } from "../../../src/Utils";
 
 class AccountManager {
 	private db: Database;
@@ -12,12 +13,13 @@ class AccountManager {
 	public addAccount(account: Account): OperationResult {
 		try {
 			this.validateAccount(account);
+			const encryptedPassword = encryptPassword(account.password);
 			const insert = this.db.prepare(
 				`INSERT INTO accounts (username, password, website_id, description) VALUES (?, ?, ?, ?)`
 			);
 			insert.run(
 				account.username,
-				account.password,
+				encryptedPassword,
 				account.website_id,
 				account.description
 			);
@@ -30,12 +32,13 @@ class AccountManager {
 	public editAccount(account: Account): OperationResult {
 		try {
 			this.validateAccount(account, true);
+			const encryptedPassword = encryptPassword(account.password);
 			const update = this.db.prepare(
 				`UPDATE accounts SET username = ?, password = ?, website_id = ?, description = ? WHERE id = ?`
 			);
 			const result: RunResult = update.run(
 				account.username,
-				account.password,
+				encryptedPassword,
 				account.website_id,
 				account.description,
 				account.id
@@ -54,10 +57,18 @@ class AccountManager {
 				`SELECT * FROM accounts WHERE website_id = ?`
 			);
 			const accounts = select.all(website_id) as Account[];
+			const decryptedAccounts = accounts.map((account) => {
+				const decryptedPassword = decryptPassword(account.password);
+				return {
+					...account,
+					password: decryptedPassword,
+				};
+			});
+
 			return {
 				success: true,
 				message: "Accounts retrieved successfully",
-				data: accounts,
+				data: decryptedAccounts,
 			};
 		} catch (error) {
 			const errorMessage =
@@ -77,7 +88,7 @@ class AccountManager {
 				? {
 						success: true,
 						message: "Account retrieved successfully",
-						data: account,
+						data: { ...account, password: decryptPassword(account.password) },
 				}
 				: { success: false, message: "Account not found" };
 		} catch (error) {
