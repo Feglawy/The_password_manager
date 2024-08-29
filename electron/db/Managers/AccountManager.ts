@@ -1,7 +1,7 @@
 import { Database, RunResult } from "better-sqlite3";
 import { Account } from "../types";
 import { DatabaseError, OperationResult } from "../utils";
-import { decryptPassword, encryptPassword } from "../../../src/Utils";
+import { decryptPassword, encryptPassword } from "../utils";
 
 class AccountManager {
 	private db: Database;
