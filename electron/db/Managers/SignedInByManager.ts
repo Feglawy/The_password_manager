@@ -19,12 +19,33 @@ class SignedInByManager {
 		}
 	}
 
-	public getSignedInBy(website_id: number): OperationResult<SignedInBy> {
+	public getAllSignedInBy(website_id: number): OperationResult<SignedInBy[]> {
 		try {
 			const select = this.db.prepare(
 				`SELECT * FROM signedInBy WHERE website_id = ?`
 			);
-			const instance = select.get(website_id) as SignedInBy | undefined;
+			const instance = select.all(website_id) as SignedInBy[] | undefined;
+			return instance
+				? {
+						success: true,
+						message: "Account retrieved successfully",
+						data: instance,
+				}
+				: { success: false, message: "Account not found" };
+		} catch (error) {
+			const errorMessage =
+				error instanceof Error ? error.message : "An unknown error occurred";
+			return {
+				success: false,
+				message: `Failed to retrieve instance of SignedInBy: ${errorMessage}`,
+			};
+		}
+	}
+
+	public getSignedInBy(id: number): OperationResult<SignedInBy> {
+		try {
+			const select = this.db.prepare(`SELECT * FROM signedInBy WHERE id = ?`);
+			const instance = select.get(id) as SignedInBy | undefined;
 			return instance
 				? {
 						success: true,
