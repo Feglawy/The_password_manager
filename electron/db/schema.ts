@@ -3,7 +3,7 @@ import { Database } from "better-sqlite3";
 export const initializeSchema = (db: Database) => {
 	try {
 		db.exec(`
-CREATE TABLE websites (
+CREATE TABLE IF NOT EXISTS websites (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     name        TEXT    NOT NULL
                         UNIQUE,
