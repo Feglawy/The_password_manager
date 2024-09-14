@@ -18,4 +18,5 @@ export interface SignedInBy {
 	id: number;
 	website_id: number;
 	account_id: number;
+	description?: string;
 }

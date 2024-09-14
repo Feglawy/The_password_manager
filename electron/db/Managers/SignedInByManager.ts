@@ -11,8 +11,12 @@ class SignedInByManager {
 	public addSignedInBy(instance: SignedInBy): OperationResult {
 		try {
 			this.validateInstance(instance);
-			const insert = this.db.prepare(`INSERT INTO signedInBy (?, ?)`);
-			insert.run(instance.website_id, instance.account_id);
+			const insert = this.db.prepare(`INSERT INTO signedInBy (?, ?, ?)`);
+			insert.run(
+				instance.website_id,
+				instance.account_id,
+				instance.description
+			);
 			return { success: true, message: "Added an instance of signed in by" };
 		} catch (error) {
 			return this.handleError(error, "Failed to add account");
@@ -66,9 +70,14 @@ class SignedInByManager {
 	public editSignedInBy(instance: SignedInBy) {
 		try {
 			const stmt = this.db.prepare(
-				`UPDATE signedInBy SET website_id = ? account_id = ? WHERE id = ?`
+				`UPDATE signedInBy SET website_id = ? account_id = ? description = ? WHERE id = ?`
 			);
-			stmt.run(instance.id, instance.website_id, instance.account_id);
+			stmt.run(
+				instance.id,
+				instance.website_id,
+				instance.account_id,
+				instance.description
+			);
 		} catch (error) {
 			return this.handleError(error, "Failed to edit signedInBy instance");
 		}
