@@ -11,6 +11,7 @@ class DBConnection {
 			DBConnection.instance = new Database(databaseFilePath, {
 				verbose: console.log,
 			});
+			DBConnection.instance.pragma("journal_mode = WAL");
 			initializeSchema(DBConnection.instance);
 		}
 		return DBConnection.instance;
