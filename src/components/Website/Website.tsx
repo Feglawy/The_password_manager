@@ -1,4 +1,5 @@
 import "../../styles/Website.css";
+import { Link } from "react-router-dom";
 
 interface WebsiteProps {
 	websiteName: string;
@@ -8,7 +9,7 @@ interface WebsiteProps {
 const Website = ({ websiteName, websiteLogoSrc }: WebsiteProps) => {
 	return (
 		<>
-			<a className="website" href={`/${websiteName}`}>
+			<Link className="website" to={`/${websiteName}`}>
 				<div className="website-logo">
 					{websiteLogoSrc ? (
 						<img src={websiteLogoSrc} alt={websiteName} />
@@ -17,7 +18,7 @@ const Website = ({ websiteName, websiteLogoSrc }: WebsiteProps) => {
 					)}
 				</div>
 				<div className="website-name">{websiteName}</div>
-			</a>
+			</Link>
 		</>
 	);
 };
