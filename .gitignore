@@ -150,3 +150,5 @@ dist
 
 *.db
 *.sqlite
+database.sqlite-shm
+database.sqlite-wal
