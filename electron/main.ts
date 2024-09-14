@@ -34,29 +34,28 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 	? path.join(process.env.APP_ROOT, "public")
 	: RENDERER_DIST;
 
-const dbName = "database.sqlite";
-const dbPath = join(__dirname, "..", dbName);
-const db = DBConnection.getInstance(dbPath);
-
-const websiteManager = new WebsiteManager(db);
-const accountManager = new AccountManager(db);
-const signedInByManager = new SignedInByManager(db);
-
 let win: BrowserWindow | null;
 
 function createWindow() {
+	
 	win = new BrowserWindow({
-		icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+		width: 1280,
+		height: 720,
 		webPreferences: {
-			preload: path.join(__dirname, "preload.mjs"),
+			preload: path.join(__dirname, "preload.js"),
+			nodeIntegration: false,
+			contextIsolation: true,
 		},
 	});
+	
 	// win.setMenu(null);
+	
 	win.webContents.setWindowOpenHandler(({ url }) => {
 		// open url in a browser and prevent default
 		shell.openExternal(url);
 		return { action: "deny" };
 	});
+
 	// Test active push message to Renderer-process.
 	win.webContents.on("did-finish-load", () => {
 		win?.webContents.send("main-process-message", new Date().toLocaleString());
@@ -90,6 +89,14 @@ app.on("activate", () => {
 
 app.whenReady().then(createWindow);
 // ____________________________________________________________________
+
+const dbName = "database.sqlite";
+const dbPath = join(__dirname, "..", dbName);
+const db = DBConnection.getInstance(dbPath);
+
+const websiteManager = new WebsiteManager(db);
+const accountManager = new AccountManager(db);
+const signedInByManager = new SignedInByManager(db);
 
 // IPC HANDLERS
 
