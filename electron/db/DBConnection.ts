@@ -13,9 +13,7 @@ class DBConnection {
 
 	public static getInstance(databaseFilePath: string): sqlLiteDatabase {
 		if (!DBConnection.instance) {
-			DBConnection.instance = new Database(databaseFilePath, {
-				verbose: console.log,
-			});
+			DBConnection.instance = new Database(databaseFilePath);
 			DBConnection.instance.pragma("journal_mode = WAL");
 			initializeSchema(DBConnection.instance);
 		}
