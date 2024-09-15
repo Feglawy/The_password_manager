@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, shell } from "electron";
+import { app, BrowserWindow, ipcMain, shell, dialog } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -8,6 +8,7 @@ import AccountManager from "./db/Managers/AccountManager";
 import SignedInByManager from "./db/Managers/SignedInByManager";
 import DBConnection from "./db/DBConnection";
 import { Account, SignedInBy, Website } from "./db/types";
+import fs from "fs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const require = createRequire(import.meta.url);
@@ -37,7 +38,6 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 let win: BrowserWindow | null;
 
 function createWindow() {
-	
 	win = new BrowserWindow({
 		width: 1280,
 		height: 720,
@@ -47,9 +47,9 @@ function createWindow() {
 			contextIsolation: true,
 		},
 	});
-	
+
 	// win.setMenu(null);
-	
+
 	win.webContents.setWindowOpenHandler(({ url }) => {
 		// open url in a browser and prevent default
 		shell.openExternal(url);
@@ -171,4 +171,33 @@ ipcMain.handle("signedInBy:get", async (_event, id: number) => {
 
 ipcMain.handle("signedInBy:delete", async (_event, id: number) => {
 	return signedInByManager.deleteSignedInBy(id);
+});
+
+//
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ipcMain.handle("open-file-dialog", async (_event) => {
+	if (!win) {
+		return Error(`main window var is null`);
+	}
+	const result = await dialog.showOpenDialog(win, {
+		properties: ["openFile"],
+		filters: [{ name: "Images", extensions: ["jpg", "png", "svg"] }],
+	});
+
+	if (result.canceled) {
+		return null;
+	} else {
+		return result.filePaths[0]; // Return the selected file path
+	}
+});
+
+ipcMain.handle("save-file", async (_event, filePath, destinationFolder) => {
+	const fileName = path.basename(filePath);
+	const destPath = path.join(destinationFolder, fileName);
+
+	// Copy the file to the assets/website-icons folder
+	fs.copyFileSync(filePath, destPath);
+
+	return destPath;
 });
