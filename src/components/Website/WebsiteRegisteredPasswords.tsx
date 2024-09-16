@@ -1,15 +1,44 @@
 import WebsiteLogo from "./WebsiteLogo";
-
+import { Website as IWebsite } from "../electron";
 import "../../styles/WebsiteRegisteredPasswords.css";
 import RegisteredPassword from "./RegisteredPassword";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const WebsiteRegisteredPasswords = () => {
+	const { websiteName } = useParams<{ websiteName: string }>();
+	const [website, setWebsite] = useState<IWebsite | undefined>(undefined);
+
+	useEffect(() => {
+		if (websiteName) {
+			window.websiteApi.getWebsiteByName(websiteName).then((result) => {
+				if (result.success) {
+					setWebsite(result.data);
+				}
+			});
+		}
+	}, [websiteName]);
+
+	if (!website) {
+		return (
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					alignContent: "center",
+				}}
+			>
+				Loading...
+			</div>
+		);
+	}
+
 	return (
 		<div style={{ overflow: "auto" }}>
 			<WebsiteLogo
-				imageSrc="/world-wide-web.svg"
-				name="instagram"
-				link="https://www.instagram.com/"
+				imageSrc={website.icon}
+				name={website.name}
+				link={website.url}
 			/>
 			<div
 				className="registered-passwords"

@@ -4,7 +4,7 @@ import "./styles/App.css";
 import SideBar from "./components/SideBar";
 import TopBar from "./components/TopBar/TopBar";
 import Accounts from "./components/Accounts";
-import Add from "./components/AddNewWebsite/Add";
+import Add from "./components/AddNew/Add";
 import Error from "./components/Error";
 import WebsiteRegisteredPasswords from "./components/Website/WebsiteRegisteredPasswords";
 import { NotificationProvider } from "./context/NotificationContext";
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: "/:website",
+		path: "/:websiteName",
 		element: (
 			<Layout>
 				<WebsiteRegisteredPasswords />
