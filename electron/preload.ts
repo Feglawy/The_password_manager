@@ -63,3 +63,9 @@ contextBridge.exposeInMainWorld("SignedInByApi", {
 	getSignedInBy: (id: number) => ipcRenderer.invoke("signedInBy:get", id),
 	deleteSignedInBy: (id: number) => ipcRenderer.invoke("signedInBy:delete", id),
 });
+
+contextBridge.exposeInMainWorld("ElectronApi", {
+	openFileDialog: () => ipcRenderer.invoke("open-image-dialog"),
+	saveFile: (filePath: string, destinationFolder: string) =>
+		ipcRenderer.invoke("save-file", filePath, destinationFolder),
+});
