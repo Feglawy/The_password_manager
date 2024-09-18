@@ -1,7 +1,11 @@
-import { useEffect, useRef } from "react";
-import "../../styles/InputImage.css";
+import React, { useEffect, useRef } from "react";
+import "../styles/InputImage.css";
 
-const InputImage = () => {
+interface InputImageProps {
+	onImageSelect: (file: File | null) => void; // Callback prop for the selected image
+}
+
+const InputImage: React.FC<InputImageProps> = ({ onImageSelect }) => {
 	const imgInputRef = useRef<HTMLInputElement | null>(null);
 	const imagePreviewRef = useRef<HTMLImageElement | null>(null);
 	const defaultIconRef = useRef<HTMLDivElement | null>(null);
@@ -14,7 +18,10 @@ const InputImage = () => {
 		const handleImageChange = (event: Event) => {
 			const target = event.target as HTMLInputElement;
 			const file = target.files?.[0];
+
 			if (file) {
+				onImageSelect(file); // Send the file to the parent component
+
 				const reader = new FileReader();
 				reader.onload = (e) => {
 					if (imagePreviewRef.current && defaultIconRef.current) {
@@ -24,6 +31,8 @@ const InputImage = () => {
 					}
 				};
 				reader.readAsDataURL(file);
+			} else {
+				onImageSelect(null); // Clear file if no file is selected
 			}
 		};
 
@@ -33,7 +42,7 @@ const InputImage = () => {
 		return () => {
 			imgInput?.removeEventListener("change", handleImageChange);
 		};
-	}, []);
+	}, [onImageSelect]);
 
 	return (
 		<div

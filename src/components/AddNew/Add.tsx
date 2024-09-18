@@ -1,14 +1,15 @@
-import Input from "../Input";
-import InputImage from "./InputImage";
-import PasswordContainer from "./PasswordContainer";
+// import Input from "../Input";
+// import InputImage from "../InputImage";
+// import PasswordContainer from "./PasswordContainer";
 import "../../styles/AddNew.css";
 import "../../styles/utils.css";
-import Button from "./Button";
+// import Button from "./Button";
+import WebsiteForm from "./WebsiteForm";
 
 function Add() {
 	return (
 		<div className="main-content">
-			<form action="" method="post">
+			{/* <form action="" method="post">
 				<InputImage />
 				<Input label="Username" id="username-inp" className="w-90" />
 				<div className="website-container">
@@ -17,7 +18,8 @@ function Add() {
 				</div>
 				<PasswordContainer className="w-90" />
 				<Button children="Submit" type="submit" />
-			</form>
+			</form> */}
+			<WebsiteForm />
 		</div>
 	);
 }
