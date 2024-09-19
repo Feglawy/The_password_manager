@@ -3,6 +3,7 @@
 // import PasswordContainer from "./PasswordContainer";
 import "../../styles/AddNew.css";
 import "../../styles/utils.css";
+import AccountForm from "./AccountForm";
 // import Button from "./Button";
 import WebsiteForm from "./WebsiteForm";
 
@@ -20,6 +21,7 @@ function Add() {
 				<Button children="Submit" type="submit" />
 			</form> */}
 			<WebsiteForm />
+			{/* <AccountForm /> */}
 		</div>
 	);
 }

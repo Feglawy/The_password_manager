@@ -10,10 +10,7 @@ export const openImageFileDialog = async () => {
 		properties: ["openFile"],
 	});
 
-	if (result.canceled) {
-		return null;
-	}
-	return result.filePaths[0];
+	return result.filePaths.length > 0 ? result.filePaths[0] : null;
 };
 
 export const saveImage = (filePath: string, destinationFolder: string) => {

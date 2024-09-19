@@ -8,10 +8,7 @@
 		"build": "tsc && vite build && electron-builder",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
-		"rebuild": "electron-rebuild -f -w better-sqlite3",
-		"package-windows": "rm -rf build && rm -rf dist && npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
-		"package-mac": "rm -rf build && rm -rf dist && npm run build && electron-builder build  -m -c.extraMetadata.main=build/electron.js ",
-		"package-linux": "rm -rf build && rm -rf dist && npm run build && electron-builder -l -c.extraMetadata.main=build/electron.js"
+		"rebuild": "electron-rebuild -f -w better-sqlite3"
 	},
 	"dependencies": {
 		"better-sqlite3": "^11.1.2",

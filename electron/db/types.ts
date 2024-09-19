@@ -1,5 +1,5 @@
 export interface Website {
-	id: number;
+	id?: number;
 	name: string;
 	url?: string;
 	iconSrc?: string;
@@ -7,7 +7,7 @@ export interface Website {
 }
 
 export interface Account {
-	id: number;
+	id?: number;
 	username: string;
 	password: string;
 	description?: string;
@@ -15,7 +15,7 @@ export interface Account {
 }
 
 export interface SignedInBy {
-	id: number;
+	id?: number;
 	website_id: number;
 	account_id: number;
 	description?: string;

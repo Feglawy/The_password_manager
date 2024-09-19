@@ -1,4 +1,8 @@
-import { ipcRenderer, contextBridge } from "electron";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+const { ipcRenderer, contextBridge } = require("electron");
+
 import { Account, SignedInBy, Website } from "./db/types";
 
 // --------- Expose some API to the Renderer process ---------
@@ -64,8 +68,8 @@ contextBridge.exposeInMainWorld("SignedInByApi", {
 	deleteSignedInBy: (id: number) => ipcRenderer.invoke("signedInBy:delete", id),
 });
 
-contextBridge.exposeInMainWorld("ElectronApi", {
-	openFileDialog: () => ipcRenderer.invoke("open-image-dialog"),
+contextBridge.exposeInMainWorld("api", {
+	openImageFileDialog: () => ipcRenderer.invoke("openImageDialog"),
 	saveFile: (filePath: string, destinationFolder: string) =>
-		ipcRenderer.invoke("save-file", filePath, destinationFolder),
+		ipcRenderer.invoke("saveFile", filePath, destinationFolder),
 });

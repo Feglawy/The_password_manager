@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, shell } from "electron";
+import { app, BrowserWindow, ipcMain, shell, dialog } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -8,7 +8,7 @@ import AccountManager from "./db/Managers/AccountManager";
 import SignedInByManager from "./db/Managers/SignedInByManager";
 import DBConnection from "./db/DBConnection";
 import { Account, SignedInBy, Website } from "./db/types";
-import { openImageFileDialog, saveImage } from "./utils";
+import fs from "fs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const require = createRequire(import.meta.url);
@@ -43,8 +43,8 @@ function createWindow() {
 		height: 720,
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
-			nodeIntegration: false,
 			contextIsolation: true,
+			nodeIntegration: false,
 		},
 	});
 
@@ -109,7 +109,8 @@ ipcMain.handle("website:edit", async (_event, website: Website) => {
 	return websiteManager.editWebsite(website);
 });
 
-ipcMain.handle("website:getAll", async () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ipcMain.handle("website:getAll", async (_event) => {
 	return websiteManager.getAllWebsites();
 });
 
@@ -176,13 +177,26 @@ ipcMain.handle("signedInBy:delete", async (_event, id: number) => {
 //______________________________________________________________________
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-ipcMain.handle("open-image-dialog", async (_event) => {
-	return await openImageFileDialog();
+ipcMain.handle("openImageDialog", async (_event) => {
+	const result = await dialog.showOpenDialog({
+		filters: [
+			{ name: "Images", extensions: ["jpg", "jpeg", "png", "gif", "bmp"] },
+		],
+		properties: ["openFile"],
+	});
+
+	return result.filePaths.length > 0 ? result.filePaths[0] : null;
 });
 
 ipcMain.handle(
-	"save-file",
+	"saveFile",
 	async (_event, filePath: string, destinationFolder: string) => {
-		return saveImage(filePath, destinationFolder);
+		const fileName = path.basename(filePath);
+		const destPath = path.join(destinationFolder, fileName);
+
+		// Copy the file to the assets/website-icons folder
+		fs.copyFileSync(filePath, destPath);
+
+		return destPath;
 	}
 );

@@ -5,15 +5,15 @@ import Button from "./Button";
 import "../../styles/utils.css";
 
 const WebsiteForm = () => {
-	const [selectedFile, setSelectedFile] = useState<File | null>(null); // Store the selected file
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [selectedFile, setSelectedFile] = useState<string | null>(null); // Store the selected file
 
-	const handleImageSelect = (file: File | null) => {
-		setSelectedFile(file);
+	const handleImageSelect = (filePath: string | null) => {
+		setSelectedFile(filePath);
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		
 	};
 
 	return (
