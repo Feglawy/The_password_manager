@@ -16,7 +16,7 @@ class WebsiteManager {
 				`INSERT INTO websites (name, url, icon, description) VALUES (?, ?, ?, ?)`
 			);
 			insert.run(
-				website.name,
+				website.name.toLowerCase(),
 				website.url,
 				website.iconSrc,
 				website.description
@@ -43,7 +43,7 @@ class WebsiteManager {
 				`UPDATE websites set name = ?, url = ?, icon = ?, description = ? WHERE id = ?`
 			);
 			const result: RunResult = update.run(
-				website.name,
+				website.name.toLowerCase(),
 				website.url,
 				website.iconSrc,
 				website.description,
