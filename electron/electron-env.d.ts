@@ -80,7 +80,7 @@ interface SignedInByApi {
 
 interface API {
 	openImageFileDialog: () => Promise<string | null>;
-	saveFile: (filePath: string, destinationFolder: string) => Promise<string>;
+	saveFile: (filePath: string) => Promise<string | null>;
 }
 
 // Used in Renderer process, expose in `preload.ts`

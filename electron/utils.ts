@@ -13,12 +13,35 @@ export const openImageFileDialog = async () => {
 	return result.filePaths.length > 0 ? result.filePaths[0] : null;
 };
 
-export const saveImage = (filePath: string, destinationFolder: string) => {
-	const fileName = path.basename(filePath);
-	const destPath = path.join(destinationFolder, fileName);
+export const saveImage = (filePath: string) => {
+	try {
+		// Construct the destination folder relative to the current working directory
+		const destinationFolder = path.join(
+			__dirname,
+			"..",
+			"public",
+			"website_icon"
+		);
 
-	// Copy the file to the assets/website-icons folder
-	fs.copyFileSync(filePath, destPath);
+		// Extract the file name from the file path
+		const fileName = path.basename(filePath);
+		// Create the destination path
+		const destPath = path.join(destinationFolder, fileName);
 
-	return destPath;
+		// Ensure the destination folder exists, or create it
+		if (!fs.existsSync(destinationFolder)) {
+			fs.mkdirSync(destinationFolder, { recursive: true });
+		}
+
+		// Copy the image file to the destination folder
+		fs.copyFileSync(filePath, destPath);
+
+		console.log(`Image saved successfully to ${destPath}`);
+
+		// Return the destination path
+		return destPath;
+	} catch (error) {
+		console.error("Error saving image:", error);
+		return null;
+	}
 };

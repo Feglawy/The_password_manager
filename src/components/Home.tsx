@@ -1,10 +1,10 @@
 import Website from "./Website/Website";
-import "../styles/Accounts.css";
+import "../styles/home.css";
 import { Website as IWebsite } from "./electron";
 import { useEffect, useState } from "react";
 import { useNotification } from "../context/NotificationContext";
 
-const Accounts = () => {
+const Home = () => {
 	const { addNotification } = useNotification();
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
 
@@ -31,4 +31,4 @@ const Accounts = () => {
 	);
 };
 
-export default Accounts;
+export default Home;

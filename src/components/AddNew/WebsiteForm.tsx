@@ -16,8 +16,12 @@ const WebsiteForm = () => {
 		setImage(selectedImage);
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		if (image) {
+			const imagePath = await window.api.saveFile(image);
+			setImage(imagePath);
+		}
 		window.websiteApi
 			.addWebsite({
 				name: websiteName,

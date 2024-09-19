@@ -1,7 +1,7 @@
 import ThemeToggler from "./ThemeToggler";
 import "../styles/SideBar.css";
 import { NavLink } from "react-router-dom";
-import { PersonCircle, Plus } from "react-bootstrap-icons";
+import { Plus, House } from "react-bootstrap-icons";
 
 const SideBar = () => {
 	return (
@@ -12,8 +12,8 @@ const SideBar = () => {
 					to="/"
 					className={({ isActive }) => (isActive ? "active" : "")}
 				>
-					<PersonCircle />
-					Accounts
+					<House />
+					Home
 				</NavLink>
 				<NavLink
 					to="/add"

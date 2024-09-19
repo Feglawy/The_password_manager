@@ -17,7 +17,7 @@ const Website = ({ websiteName, websiteLogoSrc }: WebsiteProps) => {
 						<img src="/world-wide-web.svg" alt={websiteName} />
 					)}
 				</div>
-				<div className="website-name">{websiteName}</div>
+				<div className="website-name">{websiteName.toUpperCase()}</div>
 			</Link>
 		</>
 	);
