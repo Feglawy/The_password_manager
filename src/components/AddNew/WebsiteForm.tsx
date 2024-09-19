@@ -3,34 +3,70 @@ import Input from "../Input";
 import InputImage from "../InputImage";
 import Button from "./Button";
 import "../../styles/utils.css";
+import { useNotification } from "../../context/NotificationContext";
 
 const WebsiteForm = () => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [selectedFile, setSelectedFile] = useState<string | null>(null); // Store the selected file
+	const { addNotification } = useNotification();
+	const [image, setImage] = useState<string | undefined>(undefined);
+	const [websiteName, setWebsiteName] = useState("");
+	const [websiteLink, setWebsiteLink] = useState("");
+	const [description, setDescription] = useState("");
 
-	const handleImageSelect = (filePath: string | null) => {
-		setSelectedFile(filePath);
+	const handleImageSelect = (selectedImage: string | undefined) => {
+		setImage(selectedImage);
 	};
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
+		window.websiteApi
+			.addWebsite({
+				name: websiteName,
+				url: websiteLink,
+				iconSrc: image,
+				description: description,
+			})
+			.then((result) => {
+				if (result.success) {
+					addNotification("success", result.message);
+				} else {
+					addNotification("error", result.message);
+				}
+			});
 	};
 
 	return (
-		<>
-			<form onSubmit={handleSubmit}>
-				<h1 style={{ textAlign: "center" }}>Add a website</h1>
-				<InputImage onImageSelect={handleImageSelect} />
-				<Input type="text" label="Website Name" className="w-95" required />
-				<Input type="url" label="Website Link" className="w-95" required />
-				<Input
-					textarea={true}
-					placeholder="Disctiption (optional)"
-					className="w-95"
-				/>
-				<Button children="Submit" type="submit" />
-			</form>
-		</>
+		<form onSubmit={handleSubmit}>
+			<h1 style={{ textAlign: "center" }}>Add a website</h1>
+			<InputImage onImageSelect={handleImageSelect} />
+
+			<Input
+				type="text"
+				label="Website Name"
+				className="w-95"
+				required
+				value={websiteName}
+				onChange={(e) => setWebsiteName(e.target.value)}
+			/>
+
+			<Input
+				type="url"
+				label="Website Link"
+				className="w-95"
+				required
+				value={websiteLink}
+				onChange={(e) => setWebsiteLink(e.target.value)}
+			/>
+
+			<Input
+				textarea={true}
+				placeholder="Description (optional)"
+				className="w-95"
+				value={description}
+				onChange={(e) => setDescription(e.target.value)}
+			/>
+
+			<Button children="Submit" type="submit" />
+		</form>
 	);
 };
 
