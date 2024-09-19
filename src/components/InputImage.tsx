@@ -34,7 +34,7 @@ const InputImage: React.FC<InputImageProps> = ({ onImageSelect }) => {
 					<img
 						id="image-preview"
 						ref={imagePreviewRef}
-						src={imageSrc}
+						src={`file:///${imageSrc}`}
 						alt="Image Preview"
 						style={{
 							height: "128px",

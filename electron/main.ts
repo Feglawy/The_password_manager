@@ -1,14 +1,15 @@
-import { app, BrowserWindow, ipcMain, shell, dialog } from "electron";
+import { app, BrowserWindow, ipcMain, shell, protocol } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { dirname, join } from "path";
+
+import DBConnection from "./db/DBConnection";
 import WebsiteManager from "./db/Managers/WebsiteManager";
 import AccountManager from "./db/Managers/AccountManager";
 import SignedInByManager from "./db/Managers/SignedInByManager";
-import DBConnection from "./db/DBConnection";
 import { Account, SignedInBy, Website } from "./db/types";
-import fs from "fs";
+import { openImageFileDialog, saveImage } from "./utils";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const require = createRequire(import.meta.url);
@@ -45,6 +46,7 @@ function createWindow() {
 			preload: path.join(__dirname, "preload.js"),
 			contextIsolation: true,
 			nodeIntegration: false,
+			webSecurity: false,
 		},
 	});
 
@@ -87,7 +89,14 @@ app.on("activate", () => {
 	}
 });
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+	protocol.registerFileProtocol("file", (request, callback) => {
+		const pathname = decodeURI(request.url.replace("file:///", ""));
+		callback(pathname);
+	});
+	createWindow();
+});
+
 // ____________________________________________________________________
 
 const dbName = "database.sqlite";
@@ -178,25 +187,12 @@ ipcMain.handle("signedInBy:delete", async (_event, id: number) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 ipcMain.handle("openImageDialog", async (_event) => {
-	const result = await dialog.showOpenDialog({
-		filters: [
-			{ name: "Images", extensions: ["jpg", "jpeg", "png", "gif", "bmp"] },
-		],
-		properties: ["openFile"],
-	});
-
-	return result.filePaths.length > 0 ? result.filePaths[0] : null;
+	return await openImageFileDialog();
 });
 
 ipcMain.handle(
 	"saveFile",
 	async (_event, filePath: string, destinationFolder: string) => {
-		const fileName = path.basename(filePath);
-		const destPath = path.join(destinationFolder, fileName);
-
-		// Copy the file to the assets/website-icons folder
-		fs.copyFileSync(filePath, destPath);
-
-		return destPath;
+		return saveImage(filePath, destinationFolder);
 	}
 );
