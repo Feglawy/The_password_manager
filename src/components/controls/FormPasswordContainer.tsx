@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Input from "../Input";
+import Input from "./Input";
 
 import "../../styles/PasswordContainer.css";
 
@@ -7,7 +7,7 @@ interface PasswordContainerProps {
 	className?: string;
 }
 
-const PasswordContainer = ({ className }: PasswordContainerProps) => {
+const FormPasswordContainer = ({ className }: PasswordContainerProps) => {
 	const PasswordInputRef = useRef<HTMLInputElement | null>(null);
 	const EyeImgReg = useRef<HTMLImageElement | null>(null);
 
@@ -75,4 +75,4 @@ const PasswordContainer = ({ className }: PasswordContainerProps) => {
 	);
 };
 
-export default PasswordContainer;
+export default FormPasswordContainer;

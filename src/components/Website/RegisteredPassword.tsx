@@ -1,5 +1,5 @@
-import Input from "../Input";
-import PasswordContainer from "./PasswordContainer";
+import Input from "../controls/Input";
+import PasswordContainer from "../controls/PreviewPasswordContainer";
 import "../../styles/RegisteredPassword.css";
 import DropDownMenu from "../DropDownMenu";
 import { copyToClipboard } from "../../Utils";

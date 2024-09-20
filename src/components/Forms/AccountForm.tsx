@@ -1,6 +1,6 @@
-import Input from "../Input";
-import PasswordContainer from "./PasswordContainer";
-import Button from "./Button";
+import Input from "../controls/Input";
+import PasswordContainer from "../controls/FormPasswordContainer";
+import Button from "../controls/Button";
 import "../../styles/utils.css";
 
 const AccountForm = () => {

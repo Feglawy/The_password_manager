@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Input from "../Input";
-import InputImage from "../InputImage";
-import Button from "./Button";
+import Input from "../controls/Input";
+import InputImage from "../controls/InputImage";
+import Button from "../controls/Button";
 import "../../styles/utils.css";
 import { useNotification } from "../../context/NotificationContext";
 
@@ -26,7 +26,7 @@ const WebsiteForm = () => {
 			.addWebsite({
 				name: websiteName,
 				url: websiteLink,
-				iconSrc: image,
+				icon: image,
 				description: description,
 			})
 			.then((result) => {
