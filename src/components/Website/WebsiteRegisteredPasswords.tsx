@@ -1,4 +1,4 @@
-import WebsiteLogo from "./WebsiteLogo";
+import WebsiteData from "./WebsiteData";
 import { Website as IWebsite } from "../electron";
 import "../../styles/WebsiteRegisteredPasswords.css";
 import RegisteredPassword from "./RegisteredPassword";
@@ -35,10 +35,11 @@ const WebsiteRegisteredPasswords = () => {
 
 	return (
 		<div style={{ overflow: "auto" }}>
-			<WebsiteLogo
-				imageSrc={website.icon}
+			<WebsiteData
+				icon={website.icon}
 				name={website.name}
-				link={website.url}
+				url={website.url}
+				description={website.description}
 			/>
 			<div
 				className="registered-passwords"

@@ -25,7 +25,7 @@ interface Website {
 	id?: number;
 	name: string;
 	url?: string;
-	iconSrc?: string | null;
+	icon?: string | null;
 	description?: string;
 }
 

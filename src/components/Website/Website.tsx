@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 interface WebsiteProps {
 	websiteName: string;
-	websiteLogoSrc?: string;
+	websiteLogoSrc?: string | null;
 }
 
 const Website = ({ websiteName, websiteLogoSrc }: WebsiteProps) => {
