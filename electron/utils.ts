@@ -1,6 +1,13 @@
-import path from "node:path";
+import path, { dirname } from "node:path";
 import fs from "fs";
 import { dialog } from "electron";
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export const openImageFileDialog = async () => {
 	const result = await dialog.showOpenDialog({
@@ -20,7 +27,7 @@ export const saveImage = (filePath: string) => {
 			__dirname,
 			"..",
 			"public",
-			"website_icon"
+			"website_icons"
 		);
 
 		// Extract the file name from the file path

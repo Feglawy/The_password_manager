@@ -70,6 +70,5 @@ contextBridge.exposeInMainWorld("SignedInByApi", {
 
 contextBridge.exposeInMainWorld("api", {
 	openImageFileDialog: () => ipcRenderer.invoke("openImageDialog"),
-	saveFile: (filePath: string, destinationFolder: string) =>
-		ipcRenderer.invoke("saveFile", filePath, destinationFolder),
+	saveFile: (filePath: string) => ipcRenderer.invoke("saveFile", filePath),
 });

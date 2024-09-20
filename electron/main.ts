@@ -4,17 +4,18 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { dirname, join } from "path";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 import DBConnection from "./db/DBConnection";
 import WebsiteManager from "./db/Managers/WebsiteManager";
 import AccountManager from "./db/Managers/AccountManager";
 import SignedInByManager from "./db/Managers/SignedInByManager";
 import { Account, SignedInBy, Website } from "./db/types";
-import { openImageFileDialog, saveImage } from "./utils";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { openImageFileDialog, saveImage } from "./utils";
 
 // The built directory structure
 //
@@ -190,9 +191,6 @@ ipcMain.handle("openImageDialog", async (_event) => {
 	return await openImageFileDialog();
 });
 
-ipcMain.handle(
-	"saveFile",
-	async (_event, filePath: string, destinationFolder: string) => {
-		return saveImage(filePath, destinationFolder);
-	}
-);
+ipcMain.handle("saveFile", async (_event, filePath: string) => {
+	return saveImage(filePath);
+});

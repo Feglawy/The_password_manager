@@ -7,12 +7,12 @@ import { useNotification } from "../../context/NotificationContext";
 
 const WebsiteForm = () => {
 	const { addNotification } = useNotification();
-	const [image, setImage] = useState<string | undefined>(undefined);
+	const [image, setImage] = useState<string | null>(null);
 	const [websiteName, setWebsiteName] = useState("");
 	const [websiteLink, setWebsiteLink] = useState("");
 	const [description, setDescription] = useState("");
 
-	const handleImageSelect = (selectedImage: string | undefined) => {
+	const handleImageSelect = (selectedImage: string | null) => {
 		setImage(selectedImage);
 	};
 
@@ -32,6 +32,10 @@ const WebsiteForm = () => {
 			.then((result) => {
 				if (result.success) {
 					addNotification("success", result.message);
+					setImage(null);
+					setWebsiteName("");
+					setWebsiteLink("");
+					setDescription("");
 				} else {
 					addNotification("error", result.message);
 				}

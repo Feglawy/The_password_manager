@@ -21,7 +21,15 @@ const WebsiteLogo = ({ imageSrc, name, link }: WebsiteLogoProps) => {
 					<img src="/world-wide-web.svg" alt={name} />
 				)}
 			</ExternalLink>
-			<h1 style={{ letterSpacing: "2px", textAlign: "center" }}>{name}</h1>
+			<h1
+				style={{
+					letterSpacing: "2px",
+					textAlign: "center",
+					textTransform: "capitalize",
+				}}
+			>
+				{name}
+			</h1>
 		</div>
 	);
 };
