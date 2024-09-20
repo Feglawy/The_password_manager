@@ -1,11 +1,15 @@
-import React, { useRef, useState } from "react";
-import "../styles/InputImage.css";
+import React, { useEffect, useRef, useState } from "react";
+import "../../styles/InputImage.css";
 
 interface InputImageProps {
-	onImageSelect: (file: string | null) => void; // Callback prop for the selected image
+	onImageSelect: (file: string | null) => void;
+	resetImage: boolean;
 }
 
-const InputImage: React.FC<InputImageProps> = ({ onImageSelect }) => {
+const InputImage: React.FC<InputImageProps> = ({
+	onImageSelect,
+	resetImage,
+}) => {
 	const imagePreviewRef = useRef<HTMLImageElement | null>(null);
 	const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -16,6 +20,14 @@ const InputImage: React.FC<InputImageProps> = ({ onImageSelect }) => {
 			onImageSelect(filePath);
 		}
 	};
+
+	// Effect to reset the image when resetImage prop changes
+	useEffect(() => {
+		if (resetImage) {
+			setImageSrc(null);
+			onImageSelect(null);
+		}
+	}, [resetImage, onImageSelect]);
 
 	return (
 		<div

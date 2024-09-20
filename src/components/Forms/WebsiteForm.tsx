@@ -12,8 +12,11 @@ const WebsiteForm = () => {
 	const [websiteLink, setWebsiteLink] = useState("");
 	const [description, setDescription] = useState("");
 
+	const [resetImage, setResetImage] = useState(false);
+
 	const handleImageSelect = (selectedImage: string | null) => {
 		setImage(selectedImage);
+		setResetImage(false);
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -33,6 +36,7 @@ const WebsiteForm = () => {
 				if (result.success) {
 					addNotification("success", result.message);
 					setImage(null);
+					setResetImage(true);
 					setWebsiteName("");
 					setWebsiteLink("");
 					setDescription("");
@@ -45,7 +49,7 @@ const WebsiteForm = () => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<h1 style={{ textAlign: "center" }}>Add a website</h1>
-			<InputImage onImageSelect={handleImageSelect} />
+			<InputImage onImageSelect={handleImageSelect} resetImage={resetImage} />
 
 			<Input
 				type="text"
