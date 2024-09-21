@@ -66,15 +66,15 @@ interface WebsiteApi {
 interface AccountApi {
 	addAccount: (account: Account) => Promise<OperationResult>;
 	editAccount: (account: Account) => Promise<OperationResult>;
-	getAllAccounts: () => Promise<OperationResult<Account[]>>;
+	getAccounts: (id: number) => Promise<OperationResult<Account[]>>;
 	getAccount: (id: number) => Promise<OperationResult<Account>>;
-	deleteWebsite: (id: number) => Promise<OperationResult>;
+	deleteAccount: (id: number) => Promise<OperationResult>;
 }
 
 interface SignedInByApi {
 	addSignedInBy: (instance: SignedInBy) => Promise<OperationResult>;
 	editSignedInBy: (instance: SignedInBy) => Promise<OperationResult>;
-	getAllWebsitesSignedInBy: (
+	getAllSignedInBy: (
 		website_id: number
 	) => Promise<OperationResult<SignedInBy[]>>;
 	getSignedInBy: (id: number) => Promise<OperationResult<SignedInBy>>;

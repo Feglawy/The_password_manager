@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS signedInBy (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
     website_id INTEGER NOT NULL,
     account_id INTEGER NOT NULL,
+    description TEXT,
     FOREIGN KEY (
         website_id
     )

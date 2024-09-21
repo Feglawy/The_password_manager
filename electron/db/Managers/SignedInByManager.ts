@@ -11,7 +11,9 @@ class SignedInByManager {
 	public addSignedInBy(instance: SignedInBy): OperationResult {
 		try {
 			this.validateInstance(instance);
-			const insert = this.db.prepare(`INSERT INTO signedInBy (?, ?, ?)`);
+			const insert = this.db.prepare(
+				`INSERT INTO signedInBy (website_id, account_id, description) VALUES (?, ?, ?)`
+			);
 			insert.run(
 				instance.website_id,
 				instance.account_id,
@@ -34,7 +36,7 @@ class SignedInByManager {
 						success: true,
 						message: "Account retrieved successfully",
 						data: instance,
-				}
+				  }
 				: { success: false, message: "Account not found" };
 		} catch (error) {
 			const errorMessage =
@@ -55,7 +57,7 @@ class SignedInByManager {
 						success: true,
 						message: "Account retrieved successfully",
 						data: instance,
-				}
+				  }
 				: { success: false, message: "Account not found" };
 		} catch (error) {
 			const errorMessage =
@@ -91,7 +93,7 @@ class SignedInByManager {
 				? {
 						success: true,
 						message: "Instance of signedInBy deleted successfully",
-				}
+				  }
 				: { success: false, message: "No Instance of signedInBy was deleted" };
 		} catch (error) {
 			return this.handleError(error, "Failed to delete instance");

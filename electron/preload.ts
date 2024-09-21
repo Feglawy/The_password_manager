@@ -62,7 +62,7 @@ contextBridge.exposeInMainWorld("signedInByApi", {
 		ipcRenderer.invoke("signedInBy:add", instance),
 	editSignedInBy: (instance: SignedInBy) =>
 		ipcRenderer.invoke("signedInBy:edit", instance),
-	getAllWebsitesSignedInBy: (website_id: number) =>
+	getAllSignedInBy: (website_id: number) =>
 		ipcRenderer.invoke("signedInBy:getAll", website_id),
 	getSignedInBy: (id: number) => ipcRenderer.invoke("signedInBy:get", id),
 	deleteSignedInBy: (id: number) => ipcRenderer.invoke("signedInBy:delete", id),
