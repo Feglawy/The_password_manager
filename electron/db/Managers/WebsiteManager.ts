@@ -79,9 +79,9 @@ class WebsiteManager {
 	public searchWebsite(WebsiteName: string): OperationResult<Website[]> {
 		try {
 			const search = this.db.prepare(
-				`SELECT * FROM websites WHERE name LIKE "%?%"`
+				`SELECT * FROM websites WHERE name LIKE ?`
 			);
-			const result = search.all(WebsiteName) as Website[];
+			const result = search.all(`%${WebsiteName}%`) as Website[];
 			return {
 				success: true,
 				message: "Websites retrieved successfully",
@@ -89,7 +89,9 @@ class WebsiteManager {
 			};
 		} catch (error) {
 			const errorMessage =
-				error instanceof Error ? error.message : "An unknown error has occured";
+				error instanceof Error
+					? error.message
+					: "An unknown error has occurred";
 			return {
 				success: false,
 				message: `Failed to retrieve websites: ${errorMessage}`,
