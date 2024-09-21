@@ -1,6 +1,4 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { ipcRenderer, contextBridge } = require("electron");
 
 import { Account, SignedInBy, Website } from "./db/types";
