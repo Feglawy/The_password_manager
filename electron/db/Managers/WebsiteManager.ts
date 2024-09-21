@@ -18,7 +18,7 @@ class WebsiteManager {
 			insert.run(
 				website.name.toLowerCase(),
 				website.url,
-				website.iconSrc,
+				website.icon,
 				website.description
 			);
 			return { success: true, message: "website added successfully" };
@@ -45,7 +45,7 @@ class WebsiteManager {
 			const result: RunResult = update.run(
 				website.name.toLowerCase(),
 				website.url,
-				website.iconSrc,
+				website.icon,
 				website.description,
 				website.id
 			);

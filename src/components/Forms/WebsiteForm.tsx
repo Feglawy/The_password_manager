@@ -19,17 +19,13 @@ const WebsiteForm = () => {
 		setResetImage(false);
 	};
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		if (image) {
-			const imagePath = await window.api.saveFile(image);
-			setImage(imagePath);
-		}
+	const handleAddingWebsite = (imagePath: string | null) => {
+		console.log(`before adding website : ${imagePath}`);
 		window.websiteApi
 			.addWebsite({
 				name: websiteName,
 				url: websiteLink,
-				icon: image,
+				icon: imagePath,
 				description: description,
 			})
 			.then((result) => {
@@ -44,6 +40,20 @@ const WebsiteForm = () => {
 					addNotification("error", result.message);
 				}
 			});
+	};
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		// Check if an image is provided
+		if (image) {
+			window.api.saveFile(image).then((imagePath) => {
+				handleAddingWebsite(imagePath);
+			});
+		} else {
+			addNotification("warning", "No image provided.");
+			handleAddingWebsite(null);
+		}
 	};
 
 	return (

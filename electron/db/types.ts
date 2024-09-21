@@ -2,7 +2,7 @@ export interface Website {
 	id?: number;
 	name: string;
 	url?: string;
-	iconSrc?: string;
+	icon?: string;
 	description?: string;
 }
 
