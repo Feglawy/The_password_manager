@@ -30,7 +30,7 @@ contextBridge.exposeInMainWorld("ipcRenderer", {
 	// ...
 });
 
-contextBridge.exposeInMainWorld("WebsiteApi", {
+contextBridge.exposeInMainWorld("websiteApi", {
 	addWebsite: (website: Website) => ipcRenderer.invoke("website:add", website),
 	editWebsite: (website: Website) =>
 		ipcRenderer.invoke("website:edit", website),
@@ -45,7 +45,7 @@ contextBridge.exposeInMainWorld("WebsiteApi", {
 		ipcRenderer.invoke("website:delete", website_id),
 });
 
-contextBridge.exposeInMainWorld("AccountApi", {
+contextBridge.exposeInMainWorld("accountApi", {
 	addAccount: (account: Account) => ipcRenderer.invoke("account:add", account),
 	editAccount: (account: Account) =>
 		ipcRenderer.invoke("account:edit", account),
@@ -57,7 +57,7 @@ contextBridge.exposeInMainWorld("AccountApi", {
 		ipcRenderer.invoke("account:delete", account_id),
 });
 
-contextBridge.exposeInMainWorld("SignedInByApi", {
+contextBridge.exposeInMainWorld("signedInByApi", {
 	addSignedInBy: (instance: SignedInBy) =>
 		ipcRenderer.invoke("signedInBy:add", instance),
 	editSignedInBy: (instance: SignedInBy) =>
