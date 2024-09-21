@@ -1,5 +1,5 @@
 import { AES, enc } from "crypto-ts";
-
+import { secretKey } from "./config";
 // a custom error for database-related issues
 export class DatabaseError extends Error {
 	constructor(message: string) {
@@ -16,7 +16,6 @@ export interface OperationResult<T = null> {
 }
 
 export const encryptPassword = (password: string): string => {
-	const secretKey = process.env.SECRET_KEY;
 	if (!secretKey) {
 		throw new Error("SECRET_KEY is not set in the environment variables.");
 	}
@@ -24,7 +23,6 @@ export const encryptPassword = (password: string): string => {
 };
 
 export const decryptPassword = (encryptedPassword: string): string => {
-	const secretKey = process.env.SECRET_KEY;
 	if (!secretKey) {
 		throw new Error("SECRET_KEY is not set in the environment variables.");
 	}

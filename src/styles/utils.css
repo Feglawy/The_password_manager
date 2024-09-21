@@ -8,6 +8,10 @@
 	width: 80% !important;
 }
 
+.m-t-10 {
+	margin-top: 10px !important;
+}
+
 .fade-in {
 	animation: fadeIn 0.3s ease forwards;
 }

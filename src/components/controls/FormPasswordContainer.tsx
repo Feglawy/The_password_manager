@@ -3,11 +3,12 @@ import Input from "./Input";
 
 import "../../styles/PasswordContainer.css";
 
-interface PasswordContainerProps {
-	className?: string;
+interface PasswordContainerProps
+	extends React.InputHTMLAttributes<HTMLInputElement> {
+	label?: string;
 }
 
-const FormPasswordContainer = ({ className }: PasswordContainerProps) => {
+const FormPasswordContainer = ({ ...props }: PasswordContainerProps) => {
 	const PasswordInputRef = useRef<HTMLInputElement | null>(null);
 	const EyeImgReg = useRef<HTMLImageElement | null>(null);
 
@@ -61,9 +62,10 @@ const FormPasswordContainer = ({ className }: PasswordContainerProps) => {
 			<Input
 				type="password"
 				id="password"
-				label="Password"
+				label={props.label || "Password"}
 				ref={PasswordInputRef}
-				className={`${className}`}
+				className={`${props.className}`}
+				{...props}
 			/>
 			<span onClick={TogglePasswordVisability}>
 				<img src="/eye.svg" width="48px" height="48px" ref={EyeImgReg} />

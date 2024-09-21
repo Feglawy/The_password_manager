@@ -19,8 +19,15 @@ const WebsiteForm = () => {
 		setResetImage(false);
 	};
 
+	const resetForm = () => {
+		setImage(null);
+		setResetImage(true);
+		setWebsiteName("");
+		setWebsiteLink("");
+		setDescription("");
+	};
+
 	const handleAddingWebsite = (imagePath: string | null) => {
-		console.log(`before adding website : ${imagePath}`);
 		window.websiteApi
 			.addWebsite({
 				name: websiteName,
@@ -31,11 +38,7 @@ const WebsiteForm = () => {
 			.then((result) => {
 				if (result.success) {
 					addNotification("success", result.message);
-					setImage(null);
-					setResetImage(true);
-					setWebsiteName("");
-					setWebsiteLink("");
-					setDescription("");
+					resetForm();
 				} else {
 					addNotification("error", result.message);
 				}

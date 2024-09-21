@@ -18,6 +18,9 @@ declare namespace NodeJS {
 		APP_ROOT: string;
 		/** /dist/ or /public/ */
 		VITE_PUBLIC: string;
+
+		// the secret key for encode/decode passwords
+		SECRET_KEY: string;
 	}
 }
 
