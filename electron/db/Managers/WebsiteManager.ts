@@ -118,7 +118,7 @@ class WebsiteManager {
 
 	public getWebsite(website_id: number): OperationResult<Website> {
 		try {
-			const select = this.db.prepare("SELECT * FROM websites WHERE name = ?");
+			const select = this.db.prepare("SELECT * FROM websites WHERE id = ?");
 			const website = select.get(website_id) as Website;
 			return {
 				success: true,
