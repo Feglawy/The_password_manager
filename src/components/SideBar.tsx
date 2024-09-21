@@ -6,7 +6,7 @@ import { Plus, House } from "react-bootstrap-icons";
 const SideBar = () => {
 	return (
 		<div className="sidebar">
-			<a className="logo" href="/"></a>
+			<NavLink className="logo" to="/"></NavLink>
 			<div className="links">
 				<NavLink
 					to="/"
