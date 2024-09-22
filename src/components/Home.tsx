@@ -20,13 +20,17 @@ const Home = () => {
 
 	return (
 		<div className="main-content">
-			{websites.map((website) => (
-				<Website
-					key={website.id}
-					websiteName={website.name}
-					websiteLogoSrc={website.icon}
-				/>
-			))}
+			{websites.length === 0 ? (
+				<h1>No websites available</h1>
+			) : (
+				websites.map((website) => (
+					<Website
+						key={website.id}
+						websiteName={website.name}
+						websiteLogoSrc={website.icon}
+					/>
+				))
+			)}
 		</div>
 	);
 };
