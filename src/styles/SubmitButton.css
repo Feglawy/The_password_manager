@@ -1,4 +1,4 @@
-.btn {
+.submit-btn {
 	align-items: center;
 	background-image: linear-gradient(112deg, #af40ff, #5b42f3 75%, #0eddeb);
 	border: 0;
@@ -22,6 +22,6 @@
 	cursor: pointer;
 }
 
-.btn:hover {
+.submit-btn:hover {
 	outline: 0;
 }

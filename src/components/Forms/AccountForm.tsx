@@ -95,7 +95,7 @@ const AccountForm = () => {
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
 				/>
-				<Button children="Submit" type="submit" />
+				<Button className="submit-btn" children="Submit" type="submit" />
 			</form>
 		</>
 	);
