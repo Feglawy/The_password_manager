@@ -27,23 +27,23 @@ function Add() {
 			<RadioInputs>
 				<RadioInput
 					name="Website"
-					onChange={() => {
+					onClick={() => {
 						openModal("website");
 					}}
 				/>
 				<RadioInput
 					name="Account"
-					onChange={() => {
+					onClick={() => {
 						openModal("account");
 					}}
 				/>
 				<RadioInput
 					name="Signed In By"
-					onChange={() => {
+					onClick={() => {
 						openModal("signedInBy");
 					}}
 				/>
-			</RadioInputs> 
+			</RadioInputs>
 			<ModalPopUp
 				isOpen={selectedForm === "account"}
 				onClose={() => closeModal()}

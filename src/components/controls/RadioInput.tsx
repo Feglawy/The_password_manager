@@ -1,12 +1,12 @@
 interface RadioInputProps {
 	name: string;
-	onChange: () => void;
+	onClick: () => void;
 }
 
-const RadioInput = ({ name, onChange }: RadioInputProps) => {
+const RadioInput = ({ name, onClick }: RadioInputProps) => {
 	return (
 		<label className="radio">
-			<input type="radio" name="formSelection" onChange={onChange} />
+			<input type="radio" name="formSelection" onClick={onClick} />
 			<span className="name">{name}</span>
 		</label>
 	);
