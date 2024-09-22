@@ -1,4 +1,3 @@
-import React from "react";
 import Select, { components, OptionProps, SingleValue } from "react-select";
 import { Website as IWebsite } from "../electron";
 import "../../styles/Select.css";
@@ -49,7 +48,6 @@ const WebsiteSelect: React.FC<WebsiteSelectProps> = ({ options, onSelect }) => {
 				onChange={handleChange} // Handle selection
 				placeholder="Select a website..."
 				classNamePrefix="react-select"
-				isClearable
 				autoFocus
 				required
 			/>
