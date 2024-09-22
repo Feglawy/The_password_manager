@@ -46,6 +46,7 @@ const WebsiteSelect: React.FC<WebsiteSelectProps> = ({ options, onSelect }) => {
 				options={formattedOptions}
 				components={{ Option: CustomOption }} // Use the custom option rendering
 				onChange={handleChange} // Handle selection
+				name="website-select"
 				placeholder="Select a website..."
 				classNamePrefix="react-select"
 				autoFocus

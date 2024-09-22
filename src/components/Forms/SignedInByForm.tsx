@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { Website as IWebsite, Account as IAccount } from "../electron";
+import {
+	Website as IWebsite,
+	Account as IAccount,
+	SignedInBy as ISignedInBy,
+} from "../electron";
 import WebsiteSelect from "../controls/WebsiteSelect";
 import { useNotification } from "../../context/NotificationContext";
 import Input from "../controls/Input";
@@ -17,6 +21,7 @@ const SignedInByForm = () => {
 
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
+	const [websiteId, setWebsiteId] = useState<string | null>(null);
 	const [selectedWebsite, setSelectedWebsite] = useState<string | null>(null);
 	const [selectedAccount, setSelectedAccount] = useState<OptionType | null>(
 		null
@@ -40,10 +45,29 @@ const SignedInByForm = () => {
 			addNotification("error", req.message);
 		}
 	};
-
+	const resetForm = () => {
+		setWebsiteId(null);
+		setSelectedWebsite(null);
+		setSelectedAccount(null);
+		setDescription("");
+	};
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		
+
+		const data: ISignedInBy = {
+			website_id: parseInt(websiteId!, 10),
+			account_id: parseInt(selectedAccount!.value!, 10),
+			description: description,
+		};
+
+		window.signedInByApi.addSignedInBy(data).then((result) => {
+			if (result.success) {
+				addNotification("success", result.message);
+				resetForm();
+			} else {
+				addNotification("error", result.message);
+			}
+		});
 	};
 
 	// Create options for the accounts select dropdown
@@ -70,7 +94,14 @@ const SignedInByForm = () => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<h1 style={{ textAlign: "center" }}>Add signed in by</h1>
+
+			<label htmlFor="website-select">Choose a website you logged in to</label>
+			<WebsiteSelect options={websites} onSelect={setWebsiteId} />
+
+			<label htmlFor="website-select">Choose a website you logged in by</label>
 			<WebsiteSelect options={websites} onSelect={setSelectedWebsite} />
+
+			<label htmlFor="website-select">Choose an account</label>
 			<Select
 				options={accountOptions} // Use the accountOptions here
 				value={selectedAccount}
@@ -78,6 +109,7 @@ const SignedInByForm = () => {
 					setSelectedAccount(selectedOption || null)
 				}
 				placeholder="Select an Account"
+				name="account-select"
 				isDisabled={!selectedWebsite}
 				classNamePrefix="react-select"
 				required
