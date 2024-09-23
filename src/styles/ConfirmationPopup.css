@@ -1,0 +1,22 @@
+.confirmation {
+	background-color: var(--background);
+	border-radius: 15px;
+	padding: 20px;
+	text-align: center;
+	font-size: x-large;
+}
+
+.confirmation-actions {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 1.5rem;
+}
+
+.confirmation-actions button {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	color: white;
+	font-size: large;
+}
