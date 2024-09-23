@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../controls/Input";
 import InputImage from "../controls/InputImage";
 import Button from "../controls/Button";
 import "../../styles/utils.css";
 import { useNotification } from "../../context/NotificationContext";
+import { Website as IWebsite } from "../electron";
 
-const WebsiteForm = () => {
+interface WebsiteFormProps {
+	initialData?: IWebsite;
+}
+
+const WebsiteForm = ({ initialData }: WebsiteFormProps) => {
 	const { addNotification } = useNotification();
 	const [image, setImage] = useState<string | null>(null);
 	const [websiteName, setWebsiteName] = useState("");
@@ -27,27 +32,28 @@ const WebsiteForm = () => {
 		setDescription("");
 	};
 
-	const handleAddingWebsite = (imagePath: string | null) => {
-		window.websiteApi
-			.addWebsite({
-				name: websiteName,
-				url: websiteLink,
-				icon: imagePath,
-				description: description,
-			})
-			.then((result) => {
-				if (result.success) {
-					addNotification("success", result.message);
-					resetForm();
-				} else {
-					addNotification("error", result.message);
-				}
-			});
+	const handleAddingWebsite = async (imagePath: string | null) => {
+		const websiteData = {
+			id: initialData?.id,
+			name: websiteName,
+			url: websiteLink,
+			icon: imagePath,
+			description: description,
+		};
+
+		const result = initialData
+			? await window.websiteApi.editWebsite(websiteData)
+			: await window.websiteApi.addWebsite(websiteData);
+		if (result.success) {
+			addNotification("success", result.message);
+			resetForm();
+		} else {
+			addNotification("error", result.message);
+		}
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-
 		// Check if an image is provided
 		if (image) {
 			window.api.saveFile(image).then((imagePath) => {
@@ -59,10 +65,25 @@ const WebsiteForm = () => {
 		}
 	};
 
+	useEffect(() => {
+		if (initialData) {
+			handleImageSelect(initialData.icon || null);
+			setWebsiteName(initialData.name || "");
+			setWebsiteLink(initialData.url || "");
+			setDescription(initialData.description || "");
+		}
+	}, [initialData]);
+
 	return (
 		<form onSubmit={handleSubmit}>
-			<h1 style={{ textAlign: "center" }}>Add a website</h1>
-			<InputImage onImageSelect={handleImageSelect} resetImage={resetImage} />
+			<h1 style={{ textAlign: "center" }}>
+				{initialData ? "Edit a website" : "Add a website"}
+			</h1>
+			<InputImage
+				initialValue={image || undefined}
+				onImageSelect={handleImageSelect}
+				resetImage={resetImage}
+			/>
 
 			<Input
 				type="text"

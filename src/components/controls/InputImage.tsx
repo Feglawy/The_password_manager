@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../styles/InputImage.css";
 
 interface InputImageProps {
+	initialValue?: string;
 	onImageSelect: (file: string | null) => void;
 	resetImage: boolean;
 }
 
-const InputImage: React.FC<InputImageProps> = ({
+const InputImage = ({
+	initialValue,
 	onImageSelect,
 	resetImage,
-}) => {
+}: InputImageProps) => {
 	const imagePreviewRef = useRef<HTMLImageElement | null>(null);
 	const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -28,6 +30,11 @@ const InputImage: React.FC<InputImageProps> = ({
 			onImageSelect(null);
 		}
 	}, [resetImage, onImageSelect]);
+
+	useEffect(() => {
+		setImageSrc(initialValue || null);
+		onImageSelect(initialValue || null);
+	}, [initialValue]);
 
 	return (
 		<div
