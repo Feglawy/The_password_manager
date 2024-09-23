@@ -10,7 +10,12 @@ import Input from "../controls/Input";
 import Button from "../controls/Button";
 import Select, { SingleValue } from "react-select";
 
-// Define the type for the select option
+interface WebsiteOption {
+	value: string;
+	label: string;
+	iconPath: string;
+}
+
 interface OptionType {
 	value: string;
 	label: string;
@@ -21,8 +26,10 @@ const SignedInByForm = () => {
 
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
-	const [websiteId, setWebsiteId] = useState<string | null>(null);
-	const [selectedWebsite, setSelectedWebsite] = useState<string | null>(null);
+	const [websiteLoggedInTo, setWebsiteLoggedInTo] =
+		useState<WebsiteOption | null>(null);
+	const [websiteLoggedInBy, setWebsiteLoggedInBy] =
+		useState<WebsiteOption | null>(null);
 	const [selectedAccount, setSelectedAccount] = useState<OptionType | null>(
 		null
 	);
@@ -37,71 +44,87 @@ const SignedInByForm = () => {
 		}
 	};
 
-	const loadAccounts = async (website_id: number) => {
-		const req = await window.accountApi.getAccounts(website_id);
+	const loadAccounts = async (websiteId: number) => {
+		const req = await window.accountApi.getAccounts(websiteId);
 		if (req.success) {
 			setAccounts(req.data!);
 		} else {
 			addNotification("error", req.message);
 		}
 	};
+
 	const resetForm = () => {
-		setWebsiteId(null);
-		setSelectedWebsite(null);
+		setWebsiteLoggedInTo(null);
+		setWebsiteLoggedInBy(null);
 		setSelectedAccount(null);
 		setDescription("");
 	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
+		if (!websiteLoggedInTo || !selectedAccount) {
+			addNotification("error", "Please fill all required fields.");
+			return;
+		}
+
 		const data: ISignedInBy = {
-			website_id: parseInt(websiteId!, 10),
-			account_id: parseInt(selectedAccount!.value!, 10),
+			website_id: parseInt(websiteLoggedInTo.value, 10),
+			account_id: parseInt(selectedAccount.value, 10),
 			description: description,
 		};
 
-		window.signedInByApi.addSignedInBy(data).then((result) => {
-			if (result.success) {
-				addNotification("success", result.message);
-				resetForm();
-			} else {
-				addNotification("error", result.message);
-			}
-		});
+		const result = await window.signedInByApi.addSignedInBy(data);
+		if (result.success) {
+			addNotification("success", result.message);
+			resetForm();
+		} else {
+			addNotification("error", result.message);
+		}
 	};
-
-	// Create options for the accounts select dropdown
-	const accountOptions: OptionType[] = accounts.map((account) => ({
-		value: account.id!.toString(),
-		label: account.username,
-	}));
 
 	useEffect(() => {
 		loadWebsites(); // Load websites initially
 	}, []);
 
 	useEffect(() => {
-		// Clear accounts and load new ones when selectedWebsite changes
-		if (selectedWebsite) {
+		if (websiteLoggedInBy) {
 			setAccounts([]); // Clear accounts
-			loadAccounts(Number(selectedWebsite)); // Load accounts for the selected website
+			loadAccounts(Number(websiteLoggedInBy.value)); // Load accounts for the selected website
 		} else {
 			setAccounts([]); // Clear accounts if no website is selected
 		}
 		setSelectedAccount(null); // Reset the selected account when website changes
-	}, [selectedWebsite]);
+	}, [websiteLoggedInBy]);
+
+	const accountOptions = accounts.map((account) => ({
+		value: account.id!.toString(),
+		label: account.username,
+	}));
 
 	return (
 		<form onSubmit={handleSubmit}>
 			<h1 style={{ textAlign: "center" }}>Add signed in by</h1>
 
-			<label htmlFor="website-select">Choose a website you logged in to</label>
-			<WebsiteSelect options={websites} onSelect={setWebsiteId} />
+			<label htmlFor="website-logged-in-to-select">
+				Choose a website you logged in to
+			</label>
+			<WebsiteSelect
+				value={websiteLoggedInTo}
+				options={websites}
+				onSelect={setWebsiteLoggedInTo}
+			/>
 
-			<label htmlFor="website-select">Choose a website you logged in by</label>
-			<WebsiteSelect options={websites} onSelect={setSelectedWebsite} />
+			<label htmlFor="website-logged-in-by-select">
+				Choose a website you logged in by
+			</label>
+			<WebsiteSelect
+				value={websiteLoggedInBy}
+				options={websites}
+				onSelect={setWebsiteLoggedInBy}
+			/>
 
-			<label htmlFor="website-select">Choose an account</label>
+			<label htmlFor="account-select">Choose an account</label>
 			<Select
 				options={accountOptions} // Use the accountOptions here
 				value={selectedAccount}
@@ -110,10 +133,11 @@ const SignedInByForm = () => {
 				}
 				placeholder="Select an Account"
 				name="account-select"
-				isDisabled={!selectedWebsite}
+				isDisabled={!websiteLoggedInBy}
 				classNamePrefix="react-select"
 				required
 			/>
+
 			<Input
 				textarea={true}
 				placeholder="Description (optional)"

@@ -8,11 +8,19 @@ import "../../styles/utils.css";
 import WebsiteSelect from "../controls/WebsiteSelect";
 import { useNotification } from "../../context/NotificationContext";
 
+interface WebsiteOption {
+	value: string;
+	label: string;
+	iconPath: string;
+}
+
 const AccountForm = () => {
 	const { addNotification } = useNotification();
 
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
-	const [selectedWebsite, setSelectedWebsite] = useState<string | null>(null);
+	const [selectedWebsite, setSelectedWebsite] = useState<WebsiteOption | null>(
+		null
+	);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [description, setDescription] = useState("");
@@ -41,7 +49,7 @@ const AccountForm = () => {
 				username: username,
 				password: password,
 				description: description,
-				website_id: parseInt(selectedWebsite, 10),
+				website_id: parseInt(selectedWebsite.value, 10),
 			})
 			.then((result) => {
 				if (result.success) {
@@ -70,7 +78,11 @@ const AccountForm = () => {
 		<>
 			<form onSubmit={handleSubmit}>
 				<h1 style={{ textAlign: "center" }}>Add a Account</h1>
-				<WebsiteSelect options={websites} onSelect={setSelectedWebsite} />
+				<WebsiteSelect
+					value={selectedWebsite}
+					options={websites}
+					onSelect={setSelectedWebsite}
+				/>
 
 				<Input
 					type="text"

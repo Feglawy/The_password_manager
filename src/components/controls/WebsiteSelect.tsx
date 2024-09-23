@@ -10,7 +10,8 @@ interface WebsiteOption {
 
 interface WebsiteSelectProps {
 	options: IWebsite[];
-	onSelect: (selectedValue: string) => void; // Callback to pass the selected option to the parent
+	value: SingleValue<WebsiteOption>; // Accept value from parent
+	onSelect: (selectedValue: WebsiteOption) => void; // Callback to pass the selected option to the parent
 }
 
 // Custom option component to show icon and label
@@ -28,10 +29,14 @@ const CustomOption: React.FC<OptionProps<WebsiteOption, false>> = (props) => {
 	);
 };
 
-const WebsiteSelect: React.FC<WebsiteSelectProps> = ({ options, onSelect }) => {
+const WebsiteSelect: React.FC<WebsiteSelectProps> = ({
+	options,
+	value,
+	onSelect,
+}) => {
 	const handleChange = (selectedOption: SingleValue<WebsiteOption>) => {
 		if (selectedOption) {
-			onSelect(selectedOption.value); // Pass the selected value to the parent
+			onSelect(selectedOption); // Pass the selected value to the parent
 		}
 	};
 	const formattedOptions = options.map((website) => ({
@@ -46,6 +51,7 @@ const WebsiteSelect: React.FC<WebsiteSelectProps> = ({ options, onSelect }) => {
 				options={formattedOptions}
 				components={{ Option: CustomOption }} // Use the custom option rendering
 				onChange={handleChange} // Handle selection
+				value={value}
 				name="website-select"
 				placeholder="Select a website..."
 				classNamePrefix="react-select"
