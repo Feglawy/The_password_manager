@@ -7,14 +7,19 @@ import Button from "../controls/Button";
 import "../../styles/utils.css";
 import WebsiteSelect from "../controls/WebsiteSelect";
 import { useNotification } from "../../context/NotificationContext";
+import { Account as IAccount } from "../electron";
 
 interface WebsiteOption {
 	value: string;
 	label: string;
-	iconPath: string;
+	iconPath?: string;
 }
 
-const AccountForm = () => {
+interface AccountFormProps {
+	initialData?: IAccount;
+}
+
+const AccountForm = ({ initialData }: AccountFormProps) => {
 	const { addNotification } = useNotification();
 
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
@@ -39,45 +44,61 @@ const AccountForm = () => {
 		setDescription("");
 	};
 
-	const handleAddingAccount = () => {
-		if (!selectedWebsite) {
-			addNotification("error", "Website is not selected");
-			return;
-		}
-		window.accountApi
-			.addAccount({
-				username: username,
-				password: password,
-				description: description,
-				website_id: parseInt(selectedWebsite.value, 10),
-			})
-			.then((result) => {
-				if (result.success) {
-					addNotification("success", result.message);
-					resetForm();
-				} else {
-					addNotification("error", result.message);
-				}
-			})
-			.catch((error) => {
-				addNotification("error", error);
-				console.error(error);
-			});
-	};
-
 	useEffect(() => {
 		loadWebsites();
 	}, []);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		handleAddingAccount();
+
+		if (!selectedWebsite) {
+			addNotification("error", "Website is not selected");
+			return;
+		}
+		const accountData = {
+			id: initialData?.id,
+			username: username,
+			password: password,
+			description: description,
+			website_id: parseInt(selectedWebsite.value, 10),
+		};
+
+		const result = initialData
+			? await window.accountApi.editAccount(accountData)
+			: await window.accountApi.addAccount(accountData);
+
+		if (result.success) {
+			addNotification("success", result.message);
+			resetForm();
+		} else {
+			addNotification("error", result.message);
+		}
 	};
+
+	useEffect(() => {
+		if (initialData) {
+			const website = websites.find((w) => w.id === initialData.website_id);
+			const WebsiteOption: WebsiteOption | null = website
+				? {
+						label: website.name!,
+						value: website.id?.toString() || "",
+						iconPath: website.icon!,
+						// eslint-disable-next-line no-mixed-spaces-and-tabs
+				  }
+				: null;
+			setSelectedWebsite(WebsiteOption);
+			setUsername(initialData.username || "");
+			setPassword(initialData.password || "");
+			setDescription(initialData.description || "");
+		}
+	}, [initialData, websites]);
 
 	return (
 		<>
 			<form onSubmit={handleSubmit}>
-				<h1 style={{ textAlign: "center" }}>Add a Account</h1>
+				<h1 style={{ textAlign: "center" }}>
+					{initialData ? "Edit an Account" : "Add an Account"}
+				</h1>
 				<WebsiteSelect
 					value={selectedWebsite}
 					options={websites}

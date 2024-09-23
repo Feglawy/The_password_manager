@@ -5,7 +5,7 @@ import "../../styles/Select.css";
 interface WebsiteOption {
 	value: string;
 	label: string;
-	iconPath: string;
+	iconPath?: string;
 }
 
 interface WebsiteSelectProps {
