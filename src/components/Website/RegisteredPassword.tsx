@@ -89,14 +89,12 @@ const RegisteredPassword = ({ account }: RegisteredPasswordProps) => {
 			/>
 			<PasswordContainer value={accountState.password} className="w-90" />
 
-			{accountState.description && (
-				<Input
-					textarea={true}
-					className="w-95"
-					value={accountState.description}
-					disabled
-				/>
-			)}
+			<Input
+				textarea={true}
+				className="w-95"
+				value={accountState.description}
+				disabled
+			/>
 
 			<ConfirmationPopup
 				message={`Are you sure you want to delete ${accountState.username}`}
