@@ -9,9 +9,14 @@ import { Website as IWebsite } from "../electron";
 interface WebsiteFormProps {
 	initialData?: IWebsite;
 	isEditing?: boolean;
+	onSubmit?: (updatedWebsite?: IWebsite) => void;
 }
 
-const WebsiteForm = ({ initialData, isEditing }: WebsiteFormProps) => {
+const WebsiteForm = ({
+	initialData,
+	isEditing,
+	onSubmit,
+}: WebsiteFormProps) => {
 	const { addNotification } = useNotification();
 	const [image, setImage] = useState<string | null>(null);
 	const [websiteName, setWebsiteName] = useState("");
@@ -47,6 +52,9 @@ const WebsiteForm = ({ initialData, isEditing }: WebsiteFormProps) => {
 			: await window.websiteApi.addWebsite(websiteData);
 		if (result.success) {
 			addNotification("success", result.message);
+			if (onSubmit) {
+				onSubmit(websiteData);
+			}
 			resetForm();
 		} else {
 			addNotification("error", result.message);

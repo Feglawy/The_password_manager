@@ -24,9 +24,14 @@ interface OptionType {
 interface SignedInByFormProps {
 	initialData?: ISignedInBy;
 	isEditing?: boolean;
+	onSubmit?: (updatedInctance?: ISignedInBy) => void;
 }
 
-const SignedInByForm = ({ initialData, isEditing }: SignedInByFormProps) => {
+const SignedInByForm = ({
+	initialData,
+	isEditing,
+	onSubmit,
+}: SignedInByFormProps) => {
 	const { addNotification } = useNotification();
 
 	const [isFormPopulating, setIsFormPopulating] = useState<boolean>(false); // Flag to track form population
@@ -100,6 +105,9 @@ const SignedInByForm = ({ initialData, isEditing }: SignedInByFormProps) => {
 
 			if (result.success) {
 				addNotification("success", result.message);
+				if (onSubmit) {
+					onSubmit(data);
+				}
 				resetForm();
 			} else {
 				addNotification("error", result.message);

@@ -18,9 +18,14 @@ interface WebsiteOption {
 interface AccountFormProps {
 	initialData?: IAccount;
 	isEditing?: boolean;
+	onSubmit?: (updatedAccount?: IAccount) => void;
 }
 
-const AccountForm = ({ initialData, isEditing }: AccountFormProps) => {
+const AccountForm = ({
+	initialData,
+	isEditing,
+	onSubmit,
+}: AccountFormProps) => {
 	const { addNotification } = useNotification();
 
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
@@ -71,6 +76,9 @@ const AccountForm = ({ initialData, isEditing }: AccountFormProps) => {
 		if (result.success) {
 			addNotification("success", result.message);
 			resetForm();
+			if (onSubmit) {
+				onSubmit(accountData);
+			}
 		} else {
 			addNotification("error", result.message);
 		}
