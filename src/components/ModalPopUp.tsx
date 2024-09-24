@@ -14,12 +14,22 @@ const ModalPopUp = ({ isOpen, onClose, children }: ModalPopUpProps) => {
 			onClose();
 		}
 	};
+
+	// Close the modal when pressing "Escape"
+	const handleKeyDown = (e: KeyboardEvent) => {
+		if (e.key === "Escape") {
+			onClose();
+		}
+	};
+
 	// Add event listener to handle clicks outside
 	useEffect(() => {
 		if (isOpen) {
 			document.addEventListener("mousedown", handleClickOutside);
+			document.addEventListener("keydown", handleKeyDown);
 		} else {
 			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("keydown", handleKeyDown);
 		}
 
 		return () => {
