@@ -1,13 +1,12 @@
 import { app, BrowserWindow, ipcMain, shell, protocol } from "electron";
-import { createRequire } from "node:module";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
-import { dirname, join } from "path";
+// import { createRequire } from "node:module";
+// import { fileURLToPath } from "node:url";
+import { join } from "path";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const require = createRequire(import.meta.url);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 import DBConnection from "./db/DBConnection";
 import WebsiteManager from "./db/Managers/WebsiteManager";
@@ -26,15 +25,15 @@ import { openImageFileDialog, saveImage } from "./utils";
 // │ │ ├── main.js
 // │ │ └── preload.mjs
 // │
-process.env.APP_ROOT = path.join(__dirname, "..");
+process.env.APP_ROOT = join(__dirname, "..");
 
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 export const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
-export const MAIN_DIST = path.join(process.env.APP_ROOT, "dist-electron");
-export const RENDERER_DIST = path.join(process.env.APP_ROOT, "dist");
+export const MAIN_DIST = join(process.env.APP_ROOT, "dist-electron");
+export const RENDERER_DIST = join(process.env.APP_ROOT, "dist");
 
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
-	? path.join(process.env.APP_ROOT, "public")
+	? join(process.env.APP_ROOT, "public")
 	: RENDERER_DIST;
 
 let win: BrowserWindow | null;
@@ -44,7 +43,7 @@ function createWindow() {
 		width: 1280,
 		height: 720,
 		webPreferences: {
-			preload: path.join(__dirname, "preload.js"),
+			preload: join(__dirname, "preload.js"),
 			contextIsolation: true,
 			nodeIntegration: false,
 			webSecurity: false,
@@ -68,7 +67,7 @@ function createWindow() {
 		win.loadURL(VITE_DEV_SERVER_URL);
 	} else {
 		// win.loadFile('dist/index.html')
-		win.loadFile(path.join(RENDERER_DIST, "index.html"));
+		win.loadFile(join(RENDERER_DIST, "index.html"));
 	}
 }
 
@@ -158,6 +157,10 @@ ipcMain.handle("account:get:id", async (_event, id: number) => {
 	return accountManager.getAccount(id);
 });
 
+ipcMain.handle("account:getWebsiteLoggedInTo", async (_event, id: number) => {
+	return accountManager.getWebsiteLoggedInTo(id);
+});
+
 ipcMain.handle("account:delete", async (_event, id: number) => {
 	return accountManager.deleteAccount(id);
 });
@@ -179,6 +182,20 @@ ipcMain.handle("signedInBy:getAll", async (_event, website_id: number) => {
 ipcMain.handle("signedInBy:get", async (_event, id: number) => {
 	return signedInByManager.getSignedInBy(id);
 });
+
+ipcMain.handle(
+	"signedInBy:getWebsiteLoggedInBy",
+	async (_event, id: number) => {
+		return signedInByManager.getWebsiteLoggedInBy(id);
+	}
+);
+
+ipcMain.handle(
+	"signedInBy:getAccountLoggedInWith",
+	async (_event, id: number) => {
+		return signedInByManager.getAccountLoggedInWith(id);
+	}
+);
 
 ipcMain.handle("signedInBy:delete", async (_event, id: number) => {
 	return signedInByManager.deleteSignedInBy(id);

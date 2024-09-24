@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { Database, RunResult } from "better-sqlite3";
 import { Account } from "../types";
 import { DatabaseError, OperationResult } from "../utils";
@@ -89,7 +90,7 @@ class AccountManager {
 						success: true,
 						message: "Account retrieved successfully",
 						data: { ...account, password: decryptPassword(account.password) },
-				}
+				  }
 				: { success: false, message: "Account not found" };
 		} catch (error) {
 			const errorMessage =
@@ -97,6 +98,32 @@ class AccountManager {
 			return {
 				success: false,
 				message: `Failed to retrieve accounts: ${errorMessage}`,
+			};
+		}
+	}
+
+	public getWebsiteLoggedInTo(account_id: number): OperationResult<Website> {
+		try {
+			const query = this.db.prepare(`
+				SELECT websites.*
+				FROM websites
+				JOIN accounts ON websites.id = accounts.website_id
+				WHERE accounts.id = ?
+				`)
+			const website = query.get(account_id) as Website | undefined;
+			return website
+				? {
+						success: true,
+						message: "Website retrieved successfully",
+						data: 
+				  }
+				: { success: false, message: "Website not found" };
+		} catch (error) {
+			const errorMessage =
+				error instanceof Error ? error.message : "An unknown error occurred";
+			return {
+				success: false,
+				message: `Failed to retrieve website: ${errorMessage}`,
 			};
 		}
 	}

@@ -51,6 +51,8 @@ contextBridge.exposeInMainWorld("accountApi", {
 		ipcRenderer.invoke("account:getAll", website_id),
 	getAccount: (account_id: number) =>
 		ipcRenderer.invoke("account:get:id", account_id),
+	getWebsiteLoggedInTo: (id: number) =>
+		ipcRenderer.invoke("account:getWebsiteLoggedInTo", id),
 	deleteAccount: (account_id: number) =>
 		ipcRenderer.invoke("account:delete", account_id),
 });
@@ -62,6 +64,10 @@ contextBridge.exposeInMainWorld("signedInByApi", {
 		ipcRenderer.invoke("signedInBy:edit", instance),
 	getAllSignedInBy: (website_id: number) =>
 		ipcRenderer.invoke("signedInBy:getAll", website_id),
+	getWebsiteLoggedInBy: (id: number) =>
+		ipcRenderer.invoke("signedInBy:getWebsiteLoggedInBy", id),
+	getAccountLoggedInWith: (id: number) =>
+		ipcRenderer.invoke("signedInBy:getAccountLoggedInWith", id),
 	getSignedInBy: (id: number) => ipcRenderer.invoke("signedInBy:get", id),
 	deleteSignedInBy: (id: number) => ipcRenderer.invoke("signedInBy:delete", id),
 });

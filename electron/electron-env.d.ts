@@ -68,6 +68,7 @@ interface AccountApi {
 	editAccount: (account: Account) => Promise<OperationResult>;
 	getAccounts: (id: number) => Promise<OperationResult<Account[]>>;
 	getAccount: (id: number) => Promise<OperationResult<Account>>;
+	getWebsiteLoggedInTo: (id: number) => Promise<OperationResult<Website>>;
 	deleteAccount: (id: number) => Promise<OperationResult>;
 }
 
@@ -78,6 +79,8 @@ interface SignedInByApi {
 		website_id: number
 	) => Promise<OperationResult<SignedInBy[]>>;
 	getSignedInBy: (id: number) => Promise<OperationResult<SignedInBy>>;
+	getWebsiteLoggedInBy: (id: number) => Promise<OperationResult<Website>>;
+	getAccountLoggedInWith: (id: number) => Promise<OperationResult<Account>>;
 	deleteSignedInBy: (id: number) => Promise<OperationResult>;
 }
 

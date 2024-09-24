@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { Database, RunResult } from "better-sqlite3";
 import { SignedInBy } from "../types";
 import { DatabaseError, OperationResult } from "../utils";
@@ -65,6 +66,59 @@ class SignedInByManager {
 			return {
 				success: false,
 				message: `Failed to retrieve instance of SignedInBy: ${errorMessage}`,
+			};
+		}
+	}
+
+	public getWebsiteLoggedInBy(SignedInId: number): OperationResult<Website> {
+		try {
+			const query = this.db.prepare(`
+				SELECT websites.*
+				FROM websites
+				JOIN accounts ON websites.id = accounts.website_id
+				JOIN signedInBy ON accounts.id = signedInBy.account_id
+				WHERE signedInBy.id = ?
+				`);
+			const website = query.get(SignedInId) as Website | undefined;
+			return website
+				? {
+						success: true,
+						message: "Website retrieved successfully",
+						data: website,
+				  }
+				: { success: false, message: "Couldn't get the website logged in by" };
+		} catch (error) {
+			const errorMessage =
+				error instanceof Error ? error.message : "An unknown error occured";
+			return {
+				success: false,
+				message: `Failed to retrieve instance of Website: ${errorMessage}`,
+			};
+		}
+	}
+
+	public getAccountLoggedInWith(SignedInId: number): OperationResult<Account> {
+		try {
+			const query = this.db.prepare(`
+				SELECT accounts.*
+				FROM accounts
+				JOIN signedInBy ON accounts.id = signedInBy.account_id
+				WHERE signedInBy.id = ?
+				`);
+			const account = query.get(SignedInId) as Account | undefined;
+			return account
+				? {
+						success: true,
+						message: "Account retrieved successfully",
+						data: account,
+				  }
+				: { success: false, message: "Couldn't get the account logged in by" };
+		} catch (error) {
+			const errorMessage =
+				error instanceof Error ? error.message : "An unknown error occured";
+			return {
+				success: false,
+				message: `Failed to retrieve instance of Website: ${errorMessage}`,
 			};
 		}
 	}
