@@ -6,28 +6,33 @@ import { copyToClipboard } from "../../Utils";
 import { useNotification } from "../../context/NotificationContext";
 import { useState } from "react";
 import ConfirmationPopup from "../ConfirmationPopup";
+import ModalPopUp from "../ModalPopUp";
+import AccountForm from "../Forms/AccountForm";
 
 interface Account {
-	serviceImgSrc?: string;
-	id: number;
+	id?: number;
 	website_id: number;
-	username?: string;
-	password?: string;
+	username: string;
+	password: string;
+	description?: string;
 }
 
-const RegisteredPassword = ({
-	serviceImgSrc,
-	id,
-	username,
-	password,
-}: Account) => {
+interface RegisteredPasswordProps {
+	account: Account;
+}
+
+const RegisteredPassword = ({ account }: RegisteredPasswordProps) => {
 	const { addNotification } = useNotification();
 
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+	const [accountState, setAccountState] = useState<Account>({
+		...account,
+	});
 
 	const handleCopy = () => {
 		try {
-			copyToClipboard(username + ":" + password);
+			copyToClipboard(accountState.username + ":" + accountState.password);
 			addNotification("success", "Account data copied successfully");
 		} catch (error) {
 			console.error("Could not copy text:", error);
@@ -36,11 +41,17 @@ const RegisteredPassword = ({
 	};
 	// ____________________________________________________________
 
-	const handleEdit = () => console.log("Edit clicked");
-	
+	const OpenEditForm = () => {
+		setIsEditFormOpen(true);
+	};
+
+	const CloseEditForm = () => {
+		setIsEditFormOpen(false);
+	};
+
 	// ____________________________________________________________
 	const handleDelete = () => {
-		window.accountApi.deleteAccount(id).then((result) => {
+		window.accountApi.deleteAccount(accountState.id!).then((result) => {
 			if (result.success) {
 				addNotification("success", result.message);
 			} else {
@@ -61,34 +72,49 @@ const RegisteredPassword = ({
 
 	const RegisteredPasswordControls = [
 		{ label: "Copy", onClick: handleCopy },
-		{ label: "Edit", onClick: handleEdit },
+		{ label: "Edit", onClick: OpenEditForm },
 		{ label: "Delete", onClick: OpenDeleteConfirmation },
 	];
 
 	return (
 		<div className="password-card">
-			{serviceImgSrc && (
-				<div style={{ height: "56px" }}>
-					<div className="service">
-						<img
-							src={serviceImgSrc}
-							style={{ width: "56px", height: "56px" }}
-						/>
-					</div>
-				</div>
-			)}
 			<div style={{ position: "absolute", top: "3%", right: "5%" }}>
 				<DropDownMenu items={RegisteredPasswordControls} />
 			</div>
-			<Input label="Username" disabled value={username} className="w-90" />
-			<PasswordContainer value={password} className="w-90" />
+			<Input
+				label="Username"
+				disabled
+				value={accountState.username}
+				className="w-90"
+			/>
+			<PasswordContainer value={accountState.password} className="w-90" />
+
+			{accountState.description && (
+				<Input
+					textarea={true}
+					className="w-95"
+					value={accountState.description}
+					disabled
+				/>
+			)}
 
 			<ConfirmationPopup
-				message={`Are you sure you want to delete ${username}`}
+				message={`Are you sure you want to delete ${accountState.username}`}
 				onCancel={CloseDeleteConfirmation}
 				onConfirm={handleDelete}
 				isOpen={isConfirmationOpen}
 			/>
+
+			<ModalPopUp isOpen={isEditFormOpen} onClose={CloseEditForm}>
+				<AccountForm
+					isEditing
+					initialData={accountState}
+					onSubmit={(updatedAccount) => {
+						setAccountState(updatedAccount!);
+						CloseEditForm();
+					}}
+				/>
+			</ModalPopUp>
 		</div>
 	);
 };

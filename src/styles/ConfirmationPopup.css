@@ -3,7 +3,6 @@
 	border-radius: 15px;
 	padding: 20px;
 	text-align: center;
-	font-size: x-large;
 }
 
 .confirmation-actions {
@@ -19,4 +18,15 @@
 	cursor: pointer;
 	color: white;
 	font-size: large;
+}
+
+.confirmation #message {
+	font-size: x-large;
+	font-weight: bold;
+}
+
+.confirmation #note {
+	font-weight: bold;
+	font-size: large;
+	margin: 10px;
 }

@@ -4,12 +4,14 @@ import "../styles/ConfirmationPopup.css";
 
 interface ConfirmationPopupProps {
 	message: string;
+	note?: string;
 	isOpen: boolean;
 	onConfirm: () => void;
 	onCancel: () => void;
 }
 const ConfirmationPopup = ({
 	message,
+	note,
 	onConfirm,
 	onCancel,
 	isOpen,
@@ -19,7 +21,8 @@ const ConfirmationPopup = ({
 	return (
 		<ModalPopUp isOpen={isOpen} onClose={onCancel}>
 			<div className="confirmation">
-				{message}
+				<div id="message">{message}</div>
+				<div id="note">{note}</div>
 				<div className="confirmation-actions">
 					<Button
 						style={{ backgroundColor: "green" }}
