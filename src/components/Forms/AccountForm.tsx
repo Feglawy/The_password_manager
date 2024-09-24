@@ -17,9 +17,10 @@ interface WebsiteOption {
 
 interface AccountFormProps {
 	initialData?: IAccount;
+	isEditing?: boolean;
 }
 
-const AccountForm = ({ initialData }: AccountFormProps) => {
+const AccountForm = ({ initialData, isEditing }: AccountFormProps) => {
 	const { addNotification } = useNotification();
 
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
@@ -97,7 +98,7 @@ const AccountForm = ({ initialData }: AccountFormProps) => {
 		<>
 			<form onSubmit={handleSubmit}>
 				<h1 style={{ textAlign: "center" }}>
-					{initialData ? "Edit an Account" : "Add an Account"}
+					{isEditing ? "Edit an Account" : "Add an Account"}
 				</h1>
 				<WebsiteSelect
 					value={selectedWebsite}

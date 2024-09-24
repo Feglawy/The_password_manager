@@ -13,7 +13,7 @@ import Select, { SingleValue } from "react-select";
 interface WebsiteOption {
 	value: string;
 	label: string;
-	iconPath: string;
+	iconPath?: string;
 }
 
 interface OptionType {
@@ -21,9 +21,15 @@ interface OptionType {
 	label: string;
 }
 
-const SignedInByForm = () => {
+interface SignedInByFormProps {
+	initialData?: ISignedInBy;
+	isEditing?: boolean;
+}
+
+const SignedInByForm = ({ initialData, isEditing }: SignedInByFormProps) => {
 	const { addNotification } = useNotification();
 
+	const [isFormPopulating, setIsFormPopulating] = useState<boolean>(false); // Flag to track form population
 	const [websites, setWebsites] = useState<IWebsite[]>([]);
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
 	const [websiteLoggedInTo, setWebsiteLoggedInTo] =
@@ -35,24 +41,7 @@ const SignedInByForm = () => {
 	);
 	const [description, setDescription] = useState("");
 
-	const loadWebsites = async () => {
-		const req = await window.websiteApi.getAllWebsites();
-		if (req.success) {
-			setWebsites(req.data!);
-		} else {
-			addNotification("error", req.message);
-		}
-	};
-
-	const loadAccounts = async (websiteId: number) => {
-		const req = await window.accountApi.getAccounts(websiteId);
-		if (req.success) {
-			setAccounts(req.data!);
-		} else {
-			addNotification("error", req.message);
-		}
-	};
-
+	// Helper to reset form fields
 	const resetForm = () => {
 		setWebsiteLoggedInTo(null);
 		setWebsiteLoggedInBy(null);
@@ -60,6 +49,35 @@ const SignedInByForm = () => {
 		setDescription("");
 	};
 
+	// Fetch websites and set the state
+	const fetchWebsites = async () => {
+		try {
+			const req = await window.websiteApi.getAllWebsites();
+			if (req.success && req.data) {
+				setWebsites(req.data);
+			} else {
+				addNotification("error", req.message);
+			}
+		} catch (err) {
+			addNotification("error", "Failed to load websites.");
+		}
+	};
+
+	// Fetch accounts for a selected website
+	const fetchAccounts = async (websiteId: number) => {
+		try {
+			const req = await window.accountApi.getAccounts(websiteId);
+			if (req.success && req.data) {
+				setAccounts(req.data);
+			} else {
+				addNotification("error", req.message);
+			}
+		} catch (err) {
+			addNotification("error", "Failed to load accounts.");
+		}
+	};
+
+	// Handle form submission
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
@@ -69,34 +87,93 @@ const SignedInByForm = () => {
 		}
 
 		const data: ISignedInBy = {
+			id: initialData?.id,
 			website_id: parseInt(websiteLoggedInTo.value, 10),
 			account_id: parseInt(selectedAccount.value, 10),
-			description: description,
+			description,
 		};
 
-		const result = await window.signedInByApi.addSignedInBy(data);
-		if (result.success) {
-			addNotification("success", result.message);
-			resetForm();
-		} else {
-			addNotification("error", result.message);
+		try {
+			const result = isEditing
+				? await window.signedInByApi.editSignedInBy(data)
+				: await window.signedInByApi.addSignedInBy(data);
+
+			if (result.success) {
+				addNotification("success", result.message);
+				resetForm();
+			} else {
+				addNotification("error", result.message);
+			}
+		} catch (err) {
+			addNotification("error", "Failed to submit form.");
 		}
 	};
 
+	// Load websites initially
 	useEffect(() => {
-		loadWebsites(); // Load websites initially
+		fetchWebsites();
 	}, []);
 
+	// Load accounts when a website is selected, but avoid resetting during form population
 	useEffect(() => {
 		if (websiteLoggedInBy) {
-			setAccounts([]); // Clear accounts
-			loadAccounts(Number(websiteLoggedInBy.value)); // Load accounts for the selected website
+			fetchAccounts(parseInt(websiteLoggedInBy.value, 10));
+
+			// Only reset account if form is not being populated
+			if (!isFormPopulating) {
+				setSelectedAccount(null);
+			}
 		} else {
-			setAccounts([]); // Clear accounts if no website is selected
+			setAccounts([]);
 		}
-		setSelectedAccount(null); // Reset the selected account when website changes
 	}, [websiteLoggedInBy]);
 
+	// Populate form values when editing
+	useEffect(() => {
+		if (!initialData || websites.length === 0) return;
+
+		const populateForm = async () => {
+			setIsFormPopulating(true); // Set flag before populating
+
+			const websiteTo = websites.find((w) => w.id === initialData.website_id);
+			const websiteByReq = await window.signedInByApi.getWebsiteLoggedInBy(
+				initialData.id!
+			);
+			const accountReq = await window.signedInByApi.getAccountLoggedInWith(
+				initialData.id!
+			);
+
+			if (websiteTo) {
+				setWebsiteLoggedInTo({
+					label: websiteTo.name!,
+					value: websiteTo.id!.toString(),
+					iconPath: websiteTo.icon!,
+				});
+			}
+
+			if (websiteByReq?.data) {
+				setWebsiteLoggedInBy({
+					label: websiteByReq.data.name!,
+					value: websiteByReq.data.id!.toString(),
+					iconPath: websiteByReq.data.icon!,
+				});
+			}
+
+			if (accountReq?.data) {
+				setSelectedAccount({
+					label: accountReq.data.username,
+					value: accountReq.data.id!.toString(),
+				});
+			}
+
+			setDescription(initialData.description || "");
+			setIsFormPopulating(false); // Reset flag after population
+		};
+
+		populateForm();
+	}, [initialData, websites]);
+
+	// Options for account select dropdown
 	const accountOptions = accounts.map((account) => ({
 		value: account.id!.toString(),
 		label: account.username,
@@ -104,7 +181,9 @@ const SignedInByForm = () => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<h1 style={{ textAlign: "center" }}>Add signed in by</h1>
+			<h1 style={{ textAlign: "center" }}>
+				{isEditing ? "Edit Signed In By" : "Add Signed In By"}
+			</h1>
 
 			<label htmlFor="website-logged-in-to-select">
 				Choose a website you logged in to
@@ -126,10 +205,10 @@ const SignedInByForm = () => {
 
 			<label htmlFor="account-select">Choose an account</label>
 			<Select
-				options={accountOptions} // Use the accountOptions here
+				options={accountOptions}
 				value={selectedAccount}
-				onChange={(selectedOption: SingleValue<OptionType>) =>
-					setSelectedAccount(selectedOption || null)
+				onChange={(option: SingleValue<OptionType>) =>
+					setSelectedAccount(option || null)
 				}
 				placeholder="Select an Account"
 				name="account-select"
@@ -139,12 +218,13 @@ const SignedInByForm = () => {
 			/>
 
 			<Input
-				textarea={true}
+				textarea
 				placeholder="Description (optional)"
 				className="w-95"
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
+
 			<Button className="submit-btn" children="Submit" type="submit" />
 		</form>
 	);

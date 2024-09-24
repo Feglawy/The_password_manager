@@ -8,9 +8,10 @@ import { Website as IWebsite } from "../electron";
 
 interface WebsiteFormProps {
 	initialData?: IWebsite;
+	isEditing?: boolean;
 }
 
-const WebsiteForm = ({ initialData }: WebsiteFormProps) => {
+const WebsiteForm = ({ initialData, isEditing }: WebsiteFormProps) => {
 	const { addNotification } = useNotification();
 	const [image, setImage] = useState<string | null>(null);
 	const [websiteName, setWebsiteName] = useState("");
@@ -77,7 +78,7 @@ const WebsiteForm = ({ initialData }: WebsiteFormProps) => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<h1 style={{ textAlign: "center" }}>
-				{initialData ? "Edit a website" : "Add a website"}
+				{isEditing ? "Edit a website" : "Add a website"}
 			</h1>
 			<InputImage
 				initialValue={image || undefined}
