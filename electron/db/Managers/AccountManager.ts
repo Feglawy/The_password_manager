@@ -109,13 +109,13 @@ class AccountManager {
 				FROM websites
 				JOIN accounts ON websites.id = accounts.website_id
 				WHERE accounts.id = ?
-				`)
+				`);
 			const website = query.get(account_id) as Website | undefined;
 			return website
 				? {
 						success: true,
 						message: "Website retrieved successfully",
-						data: 
+						data: website,
 				  }
 				: { success: false, message: "Website not found" };
 		} catch (error) {
