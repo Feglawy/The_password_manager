@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { Database, RunResult } from "better-sqlite3";
 import { SignedInBy } from "../types";
-import { DatabaseError, OperationResult } from "../utils";
+import { DatabaseError, decryptPassword, OperationResult } from "../utils";
 
 class SignedInByManager {
 	private db: Database;
@@ -110,7 +110,7 @@ class SignedInByManager {
 				? {
 						success: true,
 						message: "Account retrieved successfully",
-						data: account,
+						data: { ...account, password: decryptPassword(account.password) },
 				  }
 				: { success: false, message: "Couldn't get the account logged in by" };
 		} catch (error) {
