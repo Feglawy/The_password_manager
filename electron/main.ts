@@ -1,12 +1,7 @@
 import { app, BrowserWindow, ipcMain, shell, protocol } from "electron";
-// import { createRequire } from "node:module";
-// import { fileURLToPath } from "node:url";
 import { join } from "path";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const require = createRequire(import.meta.url);
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
 
 import DBConnection from "./db/DBConnection";
 import WebsiteManager from "./db/Managers/WebsiteManager";

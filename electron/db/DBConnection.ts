@@ -1,10 +1,8 @@
 import { Database as sqlLiteDatabase } from "better-sqlite3";
 import { initializeSchema } from "./schema";
 
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
 
-const Database = require("better-sqlite3");
+import Database = require("better-sqlite3");
 
 class DBConnection {
 	private static instance: sqlLiteDatabase;

@@ -5,8 +5,7 @@ export const initializeSchema = (db: Database) => {
 		db.exec(`
 CREATE TABLE IF NOT EXISTS websites (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    name        TEXT    NOT NULL
-                        UNIQUE,
+    name        TEXT    NOT NULL    UNIQUE,
     url         TEXT,
     icon        TEXT,
     description TEXT
@@ -15,6 +14,7 @@ CREATE TABLE IF NOT EXISTS websites (
 
 CREATE TABLE IF NOT EXISTS accounts (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    guid        TEXT    UNIQUE,
     username    TEXT    NOT NULL,
     password    TEXT    NOT NULL,
     website_id  INTEGER NOT NULL,

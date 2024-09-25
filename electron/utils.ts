@@ -1,13 +1,7 @@
-import path, { dirname } from "node:path";
-import fs from "fs";
+import path = require("path");
+import fs = require("fs");
 import { dialog } from "electron";
-import { createRequire } from "node:module";
-import { fileURLToPath } from "node:url";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const require = createRequire(import.meta.url);
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export const openImageFileDialog = async () => {
 	const result = await dialog.showOpenDialog({
