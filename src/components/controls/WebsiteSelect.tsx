@@ -42,7 +42,7 @@ const WebsiteSelect: React.FC<WebsiteSelectProps> = ({
 	const formattedOptions = options.map((website) => ({
 		value: website.id!.toString(),
 		label: website.name,
-		iconPath: website.icon || "public/world-wide-web.svg",
+		iconPath: website.icon || "world-wide-web.svg",
 	}));
 
 	return (

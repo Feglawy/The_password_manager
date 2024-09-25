@@ -89,7 +89,7 @@ const RegisteredSignedInBy = ({ instance }: RegisteredSignedInByProps) => {
 			<div style={{ height: "56px", marginBottom: "20px" }}>
 				<Link className="service" to={`/${websiteState?.name}`}>
 					<img
-						src={websiteState?.icon || "public/world-wide-web.svg"}
+						src={websiteState?.icon || "world-wide-web.svg"}
 						alt={websiteState?.name}
 						style={{ width: "56px", height: "56px" }}
 					/>
