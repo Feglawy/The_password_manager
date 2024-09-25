@@ -60,22 +60,28 @@ const WebsiteData = (props: WebsiteDataProps) => {
 
 	return (
 		<div
-			style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center",
+				position: "relative",
+			}}
 		>
-			<div style={{ position: "absolute", top: "10%", right: "25%" }}>
-				<DropDownMenu items={RegisteredPasswordControls} />
+			<div style={{ position: "relative" }}>
+				<ExternalLink href={websiteState.url || ""}>
+					{websiteState.icon ? (
+						<img
+							src={websiteState.icon}
+							style={{ width: "256px", borderRadius: "38%/40%" }}
+						/>
+					) : (
+						<img src="/world-wide-web.svg" alt={websiteState.name} />
+					)}
+				</ExternalLink>
+				<div style={{ position: "absolute", top: "0", left: "256px" }}>
+					<DropDownMenu items={RegisteredPasswordControls} />
+				</div>
 			</div>
-
-			<ExternalLink href={websiteState.url || ""}>
-				{websiteState.icon ? (
-					<img
-						src={websiteState.icon}
-						style={{ width: "256px", borderRadius: "38%/40%" }}
-					/>
-				) : (
-					<img src="/world-wide-web.svg" alt={websiteState.name} />
-				)}
-			</ExternalLink>
 			<h1
 				style={{
 					letterSpacing: "2px",

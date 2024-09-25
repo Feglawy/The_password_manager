@@ -66,7 +66,7 @@ const WebsiteRegisteredPasswords = () => {
 	}
 
 	return (
-		<div style={{ overflow: "auto" }}>
+		<div style={{ overflow:"scroll" }}>
 			<WebsiteData data={website} />
 			<hr
 				style={{
