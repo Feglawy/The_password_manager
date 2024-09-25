@@ -45,6 +45,11 @@ const router = createBrowserRouter([
 				<Add />
 			</Layout>
 		),
+		errorElement: (
+			<Layout>
+				<Error />
+			</Layout>
+		),
 	},
 	{
 		path: "/:websiteName",
