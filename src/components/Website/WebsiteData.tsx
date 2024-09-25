@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useNotification } from "../../context/NotificationContext";
@@ -20,6 +20,10 @@ const WebsiteData = (props: WebsiteDataProps) => {
 	const [websiteState, setWebsiteState] = useState<IWebsite>({ ...props.data });
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+
+	useEffect(() => {
+		setWebsiteState({ ...props.data });
+	}, [props]);
 
 	// ____________________________________________________________
 
