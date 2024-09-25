@@ -6,7 +6,7 @@ const WebsiteData = (data: WebsiteDataProps) => {
 		<div
 			style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
 		>
-			<ExternalLink href={data.name || ""}>
+			<ExternalLink href={data.url || ""}>
 				{data.icon ? (
 					<img
 						src={data.icon}
