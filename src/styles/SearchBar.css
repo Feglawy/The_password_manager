@@ -1,7 +1,7 @@
 .search-wrapper {
 	display: flex;
 	height: 100%;
-	overflow: hidden;
+	overflow: visible; /* Changed to visible for suggestion dropdown */
 	flex-direction: row;
 	flex-wrap: nowrap;
 	align-content: center;
@@ -9,6 +9,7 @@
 	align-items: center;
 	width: 50%;
 }
+
 .search-wrapper .disclaimer {
 	bottom: 15px;
 	position: absolute;
@@ -29,9 +30,35 @@
 	color: var(--text);
 	outline: none;
 	padding: 5px;
-	position: relative;
 	transition: all 150ms cubic-bezier(0.2, 0.6, 0.252, 1.2);
 }
+
+.input-group .search::placeholder,
+.input-group .search::-moz-placeholder,
+.input-group .search:-ms-input-placeholder {
+	color: #fff;
+}
+
+.input-group .search:focus {
+	padding: 10px;
+	height: 25px;
+	width: 37vw;
+	font-size: larger;
+	border-radius: 16px;
+	color: var(--text);
+	background-color: #0000002e;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(15.9px);
+	-webkit-backdrop-filter: blur(15.9px);
+	cursor: initial;
+}
+
+.input-group .search:focus::placeholder,
+.input-group .search:focus::-moz-placeholder,
+.input-group .search:focus:-ms-input-placeholder {
+	color: #a1a1a1;
+}
+
 .input-group .search ~ .bar {
 	height: 4px;
 	width: 15px;
@@ -39,48 +66,41 @@
 	border-radius: 4px;
 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
 	position: absolute;
-	display: block;
 	opacity: 1;
 	right: -9px;
 	top: 24px;
 	transform: rotate(45deg);
 	transition: opacity 150ms ease;
 }
-.input-group .search::-moz-placeholder {
-	color: #fff;
-}
-.input-group .search:-ms-input-placeholder {
-	color: #fff;
-}
-.input-group .search::placeholder {
-	color: #fff;
-}
-.input-group .search:focus {
-	padding: 10px;
-	height: 25px;
-	width: 37vw;
-	font-size: larger;
-	border-radius: 3px;
-	color: var(--text);
-	background-color: #0000002e;
-	border-radius: 16px;
-	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-	backdrop-filter: blur(15.9px);
-	-webkit-backdrop-filter: blur(15.9px);
-	cursor: initial;
-}
-.input-group .search:focus::-moz-placeholder {
-	color: #a1a1a1;
-}
-.input-group .search:focus:-ms-input-placeholder {
-	color: #a1a1a1;
-}
-.input-group .search:focus::placeholder {
-	color: #a1a1a1;
-}
+
 .input-group .search:focus ~ .bar {
 	box-shadow: none;
 	opacity: 0;
 	right: 0;
 	top: 5px;
+}
+
+.input-group .suggestions {
+	list-style: none;
+	margin: 5px 0 0;
+	padding: 0;
+	background-color: var(--background);
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	position: absolute;
+	width: 100%;
+	max-height: 200px;
+	overflow-y: auto;
+	z-index: 10;
+}
+
+.input-group .suggestions li {
+	padding: 10px;
+	cursor: pointer;
+	transition: background-color 150ms ease;
+}
+
+.input-group .suggestions li:hover,
+.input-group .suggestions li.active {
+	background-color: #c9b4ef; /* Active suggestion background color */
 }
