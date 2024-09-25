@@ -66,7 +66,7 @@ const WebsiteRegisteredPasswords = () => {
 	}
 
 	return (
-		<div style={{ overflow:"scroll" }}>
+		<div style={{ overflow: "scroll" }}>
 			<WebsiteData data={website} />
 			<hr
 				style={{
@@ -95,19 +95,19 @@ const WebsiteRegisteredPasswords = () => {
 					))
 				)}
 			</div>
-			<hr
-				style={{
-					width: "50%",
-					textAlign: "center",
-					borderBottom: "none",
-					borderLeft: "none",
-					borderTop: "1px solid rgb(0 0 0)",
-				}}
-			/>
-			{signedInByAcc.length !== 0 ? (
+			{accounts.length !== 0 && (
+				<hr
+					style={{
+						width: "50%",
+						textAlign: "center",
+						borderBottom: "none",
+						borderLeft: "none",
+						borderTop: "1px solid rgb(0 0 0)",
+					}}
+				/>
+			)}
+			{signedInByAcc.length !== 0 && (
 				<h1 style={{ textAlign: "center" }}>Signed in by other services</h1>
-			) : (
-				""
 			)}
 			<div
 				// className="signed-in-by-passwords"
