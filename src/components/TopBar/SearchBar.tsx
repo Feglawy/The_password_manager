@@ -58,7 +58,7 @@ const SearchBar = () => {
 			} else if (e.key === "Enter") {
 				// Select the current suggestion
 				if (activeSuggestionIndex >= 0) {
-					navigate(`/${suggestions[activeSuggestionIndex].name}`);
+					navigate(`/${suggestions[activeSuggestionIndex].id}`);
 					setSuggestions([]); // Close suggestions list
 				}
 			}
@@ -67,7 +67,7 @@ const SearchBar = () => {
 
 	const handleSuggestionClick = (suggestion: Website) => {
 		setSearchTerm(suggestion.name);
-		navigate(`/${suggestion.name}`);
+		navigate(`/${suggestion.id}`);
 		setSuggestions([]); // Close suggestions on click
 	};
 
