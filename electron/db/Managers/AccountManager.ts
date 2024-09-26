@@ -22,8 +22,9 @@ class AccountManager {
 			const insert = this.db.prepare(
 				`INSERT INTO accounts (guid, username, password, website_id, description) VALUES (?, ?, ?, ?, ?)`
 			);
+			const guid = `{${uuidV4()}}`;
 			insert.run(
-				uuidV4(),
+				guid,
 				account.username,
 				encryptedPassword,
 				account.website_id,

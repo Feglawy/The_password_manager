@@ -97,7 +97,7 @@ export const exportToCsv = (destPath: string) => {
 		username: row.username,
 		password: decryptPassword(row.password),
 		formActionOrigin: row.url,
-		guid: `{${row.guid}}`,
+		guid: row.guid,
 		timeCreated: "",
 		timeLastUsed: "",
 		timePasswordChanged: "",

@@ -143,6 +143,7 @@ const WebsiteData = (props: WebsiteDataProps) => {
 						username: "",
 						password: "",
 					}}
+					onSubmit={CloseAddAccountForm}
 				/>
 			</ModalPopUp>
 		</div>
