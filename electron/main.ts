@@ -43,6 +43,7 @@ function createWindow() {
 	win = new BrowserWindow({
 		width: 1280,
 		height: 720,
+		icon: "public/logo.ico",
 		webPreferences: {
 			preload: join(__dirname, "preload.js"),
 			contextIsolation: true,
@@ -51,7 +52,7 @@ function createWindow() {
 		},
 	});
 
-	// win.setMenu(null);
+	win.setMenu(null);
 
 	win.webContents.setWindowOpenHandler(({ url }) => {
 		// open url in a browser and prevent default
