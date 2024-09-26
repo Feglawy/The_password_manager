@@ -92,7 +92,7 @@ const RegisteredPassword = ({ account }: RegisteredPasswordProps) => {
 			<Input
 				textarea={true}
 				className="w-95"
-				value={accountState.description}
+				value={accountState.description || ""}
 				disabled
 			/>
 

@@ -8,6 +8,7 @@ import { Website as IWebsite } from "../electron";
 import ModalPopUp from "../ModalPopUp";
 import WebsiteForm from "../Forms/WebsiteForm";
 import ConfirmationPopup from "../ConfirmationPopup";
+import AccountForm from "../Forms/AccountForm";
 
 interface WebsiteDataProps {
 	data: IWebsite;
@@ -20,13 +21,22 @@ const WebsiteData = (props: WebsiteDataProps) => {
 	const [websiteState, setWebsiteState] = useState<IWebsite>({ ...props.data });
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+	const [isAddAccountFormOpen, setIsAddAccountFormOpen] = useState(false);
 
 	useEffect(() => {
 		setWebsiteState({ ...props.data });
 	}, [props]);
 
 	// ____________________________________________________________
+	const OpenAddAccountForm = () => {
+		setIsAddAccountFormOpen(true);
+	};
 
+	const CloseAddAccountForm = () => {
+		setIsAddAccountFormOpen(false);
+	};
+
+	// ____________________________________________________________
 	const OpenEditForm = () => {
 		setIsEditFormOpen(true);
 	};
@@ -58,6 +68,7 @@ const WebsiteData = (props: WebsiteDataProps) => {
 	// _____________________________________________________________
 
 	const RegisteredPasswordControls = [
+		{ label: "Add account", onClick: OpenAddAccountForm },
 		{ label: "Edit", onClick: OpenEditForm },
 		{ label: "Delete", onClick: OpenDeleteConfirmation },
 	];
@@ -121,6 +132,16 @@ const WebsiteData = (props: WebsiteDataProps) => {
 					onSubmit={(updatedWebsite) => {
 						setWebsiteState(updatedWebsite!);
 						CloseEditForm();
+					}}
+				/>
+			</ModalPopUp>
+
+			<ModalPopUp isOpen={isAddAccountFormOpen} onClose={CloseAddAccountForm}>
+				<AccountForm
+					initialData={{
+						website_id: websiteState.id!,
+						username: "",
+						password: "",
 					}}
 				/>
 			</ModalPopUp>

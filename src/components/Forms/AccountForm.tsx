@@ -69,7 +69,7 @@ const AccountForm = ({
 			website_id: parseInt(selectedWebsite.value, 10),
 		};
 
-		const result = initialData
+		const result = isEditing
 			? await window.accountApi.editAccount(accountData)
 			: await window.accountApi.addAccount(accountData);
 

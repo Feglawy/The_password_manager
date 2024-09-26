@@ -47,7 +47,7 @@ const WebsiteForm = ({
 			description: description,
 		};
 
-		const result = initialData
+		const result = isEditing
 			? await window.websiteApi.editWebsite(websiteData)
 			: await window.websiteApi.addWebsite(websiteData);
 		if (result.success) {
