@@ -14,15 +14,16 @@ import RegisteredSignedInBy from "./RegisteredSignedInBy";
 
 const WebsiteRegisteredPasswords = () => {
 	const { addNotification } = useNotification();
-	const { websiteName } = useParams<{ websiteName: string }>();
+	const { website_id } = useParams<{ website_id: string }>();
 
 	const [website, setWebsite] = useState<IWebsite | undefined>(undefined);
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
 	const [signedInByAcc, setSignedInByAcc] = useState<ISignedInBy[]>([]);
 
 	useEffect(() => {
-		if (websiteName) {
-			window.websiteApi.getWebsiteByName(websiteName).then((result) => {
+		if (website_id) {
+			const id = parseInt(website_id, 10);
+			window.websiteApi.getWebsite(id).then((result) => {
 				if (result.success) {
 					setWebsite(result.data);
 				} else {
@@ -30,7 +31,7 @@ const WebsiteRegisteredPasswords = () => {
 				}
 			});
 		}
-	}, [websiteName, addNotification]);
+	}, [website_id, addNotification]);
 
 	useEffect(() => {
 		if (website?.id) {

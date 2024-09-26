@@ -17,9 +17,11 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
 	return (
 		<>
-			<TopBar />
 			<SideBar />
-			<NotificationProvider>{children}</NotificationProvider>
+			<NotificationProvider>
+				<TopBar />
+				{children}
+			</NotificationProvider>
 		</>
 	);
 };
@@ -52,7 +54,7 @@ const router = createBrowserRouter([
 		),
 	},
 	{
-		path: "/:websiteName",
+		path: "/:website_id",
 		element: (
 			<Layout>
 				<WebsiteRegisteredPasswords />

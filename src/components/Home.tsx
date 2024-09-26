@@ -26,6 +26,7 @@ const Home = () => {
 				websites.map((website) => (
 					<Website
 						key={website.id}
+						id={website.id!}
 						websiteName={website.name}
 						websiteLogoSrc={website.icon}
 					/>

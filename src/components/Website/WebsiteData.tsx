@@ -9,6 +9,7 @@ import ModalPopUp from "../ModalPopUp";
 import WebsiteForm from "../Forms/WebsiteForm";
 import ConfirmationPopup from "../ConfirmationPopup";
 import AccountForm from "../Forms/AccountForm";
+import SignedInByForm from "../Forms/SignedInByForm";
 
 interface WebsiteDataProps {
 	data: IWebsite;
@@ -22,6 +23,7 @@ const WebsiteData = (props: WebsiteDataProps) => {
 	const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
 	const [isAddAccountFormOpen, setIsAddAccountFormOpen] = useState(false);
+	const [isAddSIBFormOpen, setIsAddSIBFormOpen] = useState(false);
 
 	useEffect(() => {
 		setWebsiteState({ ...props.data });
@@ -34,6 +36,15 @@ const WebsiteData = (props: WebsiteDataProps) => {
 
 	const CloseAddAccountForm = () => {
 		setIsAddAccountFormOpen(false);
+	};
+
+	// ____________________________________________________________
+	const OpenAddSIBForm = () => {
+		setIsAddSIBFormOpen(true);
+	};
+
+	const CloseAddSIBForm = () => {
+		setIsAddSIBFormOpen(false);
 	};
 
 	// ____________________________________________________________
@@ -69,6 +80,7 @@ const WebsiteData = (props: WebsiteDataProps) => {
 
 	const RegisteredPasswordControls = [
 		{ label: "Add account", onClick: OpenAddAccountForm },
+		{ label: "signed in by", onClick: OpenAddSIBForm },
 		{ label: "Edit", onClick: OpenEditForm },
 		{ label: "Delete", onClick: OpenDeleteConfirmation },
 	];
@@ -84,14 +96,10 @@ const WebsiteData = (props: WebsiteDataProps) => {
 		>
 			<div style={{ position: "relative" }}>
 				<ExternalLink href={websiteState.url || ""}>
-					{websiteState.icon ? (
-						<img
-							src={websiteState.icon}
-							style={{ width: "256px", borderRadius: "38%/40%" }}
-						/>
-					) : (
-						<img src="/world-wide-web.svg" alt={websiteState.name} />
-					)}
+					<img
+						src={websiteState.icon || "world-wide-web.svg"}
+						style={{ width: "256px", borderRadius: "38%/40%" }}
+					/>
 				</ExternalLink>
 				<div style={{ position: "absolute", top: "0", left: "256px" }}>
 					<DropDownMenu items={RegisteredPasswordControls} />
@@ -101,7 +109,6 @@ const WebsiteData = (props: WebsiteDataProps) => {
 				style={{
 					letterSpacing: "2px",
 					textAlign: "center",
-					textTransform: "capitalize",
 				}}
 			>
 				{websiteState.name}
@@ -144,6 +151,16 @@ const WebsiteData = (props: WebsiteDataProps) => {
 						password: "",
 					}}
 					onSubmit={CloseAddAccountForm}
+				/>
+			</ModalPopUp>
+
+			<ModalPopUp isOpen={isAddSIBFormOpen} onClose={CloseAddSIBForm}>
+				<SignedInByForm
+					initialData={{
+						website_id: websiteState.id!,
+						account_id: -1, // temp
+					}}
+					onSubmit={CloseAddSIBForm}
 				/>
 			</ModalPopUp>
 		</div>

@@ -2,22 +2,19 @@ import "../../styles/Website.css";
 import { Link } from "react-router-dom";
 
 interface WebsiteProps {
+	id: number;
 	websiteName: string;
 	websiteLogoSrc?: string | null;
 }
 
-const Website = ({ websiteName, websiteLogoSrc }: WebsiteProps) => {
+const Website = ({ id, websiteName, websiteLogoSrc }: WebsiteProps) => {
 	return (
 		<>
-			<Link className="website" to={`/${websiteName}`}>
+			<Link className="website" to={`/${id}`}>
 				<div className="website-logo">
-					{websiteLogoSrc ? (
-						<img src={websiteLogoSrc} alt={websiteName} />
-					) : (
-						<img src="/world-wide-web.svg" alt={websiteName} />
-					)}
+					<img src={websiteLogoSrc || "world-wide-web.svg"} alt={websiteName} />
 				</div>
-				<div className="website-name">{websiteName.toUpperCase()}</div>
+				<div className="website-name">{websiteName}</div>
 			</Link>
 		</>
 	);

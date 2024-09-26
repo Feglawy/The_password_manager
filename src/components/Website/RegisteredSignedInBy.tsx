@@ -87,7 +87,7 @@ const RegisteredSignedInBy = ({ instance }: RegisteredSignedInByProps) => {
 	return (
 		<div className="password-card">
 			<div style={{ height: "56px", marginBottom: "20px" }}>
-				<Link className="service" to={`/${websiteState?.name}`}>
+				<Link className="service" to={`/${websiteState?.id}`}>
 					<img
 						src={websiteState?.icon || "world-wide-web.svg"}
 						alt={websiteState?.name}
