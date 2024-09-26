@@ -33,7 +33,5 @@ export const decryptPassword = (encryptedPassword: string): string => {
 export const extractWebsitename = (url: string): string => {
 	const urlObj = new URL(url);
 	const hostname = urlObj.hostname;
-
-	const parts = hostname.split(".");
-	return parts.slice(-2).join(".");
+	return hostname;
 };
