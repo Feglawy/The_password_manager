@@ -9,7 +9,13 @@ import AccountManager from "./db/Managers/AccountManager";
 import SignedInByManager from "./db/Managers/SignedInByManager";
 import { Account, SignedInBy, Website } from "./db/types";
 
-import { openImageFileDialog, saveImage } from "./utils";
+import {
+	openCsvFileDialog,
+	openDirPathDialog,
+	openImageFileDialog,
+	saveImage,
+} from "./utils";
+import { exportToCsv, importFromCsv } from "./db/csvManager";
 
 // The built directory structure
 //
@@ -201,4 +207,20 @@ ipcMain.handle("openImageDialog", async (_event) => {
 
 ipcMain.handle("saveFile", async (_event, filePath: string) => {
 	return saveImage(filePath);
+});
+
+ipcMain.handle("openDirDialog", async () => {
+	return openDirPathDialog();
+});
+
+ipcMain.handle("openCsvDialog", async () => {
+	return openCsvFileDialog();
+});
+
+ipcMain.handle("importFromCSV", async (_event, filePath: string) => {
+	return importFromCsv(filePath);
+});
+
+ipcMain.handle("exportAsCSV", async (_event, destPath: string) => {
+	return exportToCsv(destPath);
 });

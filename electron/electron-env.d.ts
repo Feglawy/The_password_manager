@@ -87,6 +87,10 @@ interface SignedInByApi {
 interface API {
 	openImageFileDialog: () => Promise<string | null>;
 	saveFile: (filePath: string) => Promise<string | null>;
+	importFromCsv: (filePath: string) => Promise<OperationResult>;
+	exportAsCsv: (dirPath: string) => Promise<OperationResult>;
+	openDirDialog: () => Promise<string | null>;
+	openCsvDialog: () => Promise<string | null>;
 }
 
 // Used in Renderer process, expose in `preload.ts`

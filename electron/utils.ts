@@ -2,7 +2,6 @@ import path = require("path");
 import fs = require("fs");
 import { dialog } from "electron";
 
-
 export const openImageFileDialog = async () => {
 	const result = await dialog.showOpenDialog({
 		filters: [
@@ -11,6 +10,21 @@ export const openImageFileDialog = async () => {
 		properties: ["openFile"],
 	});
 
+	return result.filePaths.length > 0 ? result.filePaths[0] : null;
+};
+
+export const openCsvFileDialog = async () => {
+	const result = await dialog.showOpenDialog({
+		filters: [{ name: "Csv", extensions: ["csv"] }],
+		properties: ["openFile"],
+	});
+	return result.filePaths.length > 0 ? result.filePaths[0] : null;
+};
+
+export const openDirPathDialog = async () => {
+	const result = await dialog.showOpenDialog({
+		properties: ["openDirectory"],
+	});
 	return result.filePaths.length > 0 ? result.filePaths[0] : null;
 };
 

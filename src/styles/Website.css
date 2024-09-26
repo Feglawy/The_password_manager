@@ -11,6 +11,12 @@
 	cursor: pointer;
 	text-decoration: none;
 	color: var(--text);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	overflow: hidden; /* Ensure content stays within the box */
 }
 
 .website:hover {
@@ -28,6 +34,9 @@
 	opacity: 0;
 	max-height: 0;
 	transition: all 0.3s ease;
+	overflow: hidden; /* Ensure text doesn't overflow */
+	white-space: nowrap; 
+	text-overflow: ellipsis; /* Add ellipsis if text overflows */
 }
 
 .website:hover .website-name {
@@ -44,4 +53,11 @@
 	border-radius: 38% /40%;
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+.website-logo {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

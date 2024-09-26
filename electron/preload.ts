@@ -75,4 +75,9 @@ contextBridge.exposeInMainWorld("signedInByApi", {
 contextBridge.exposeInMainWorld("api", {
 	openImageFileDialog: () => ipcRenderer.invoke("openImageDialog"),
 	saveFile: (filePath: string) => ipcRenderer.invoke("saveFile", filePath),
+	importFromCsv: (filePath: string) =>
+		ipcRenderer.invoke("importFromCSV", filePath),
+	exportAsCsv: (dirPath: string) => ipcRenderer.invoke("exportAsCSV", dirPath),
+	openDirDialog: () => ipcRenderer.invoke("openDirDialog"),
+	openCsvDialog: () => ipcRenderer.invoke("openCsvDialog"),
 });

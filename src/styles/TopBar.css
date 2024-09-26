@@ -1,5 +1,5 @@
 .top-bar {
-	grid-area: 1 / 2 / 2 / 3;
+	grid-area: top-bar;
 	z-index: 2;
 	display: flex;
 	flex-direction: row;
