@@ -1,12 +1,14 @@
 import { Database, RunResult } from "better-sqlite3";
 import { Website } from "../types";
 import { DatabaseError, OperationResult } from "../utils";
+import DBConnection from "../DBConnection";
+import { dbPath } from "../config";
 
 class WebsiteManager {
 	private db: Database;
 
-	constructor(db: Database) {
-		this.db = db;
+	constructor() {
+		this.db = DBConnection.getInstance(dbPath);
 	}
 
 	public addWebsite(website: Website): OperationResult {

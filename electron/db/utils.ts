@@ -29,3 +29,11 @@ export const decryptPassword = (encryptedPassword: string): string => {
 	const bytes = AES.decrypt(encryptedPassword, secretKey);
 	return bytes.toString(enc.Utf8);
 };
+
+export const extractWebsitename = (url: string): string => {
+	const urlObj = new URL(url);
+	const hostname = urlObj.hostname;
+
+	const parts = hostname.split(".");
+	return parts.slice(-2).join(".");
+};

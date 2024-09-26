@@ -2,11 +2,13 @@
 import { Database, RunResult } from "better-sqlite3";
 import { SignedInBy } from "../types";
 import { DatabaseError, decryptPassword, OperationResult } from "../utils";
+import DBConnection from "../DBConnection";
+import { dbPath } from "../config";
 
 class SignedInByManager {
 	private db: Database;
-	constructor(db: Database) {
-		this.db = db;
+	constructor() {
+		this.db = DBConnection.getInstance(dbPath);
 	}
 
 	public addSignedInBy(instance: SignedInBy): OperationResult {

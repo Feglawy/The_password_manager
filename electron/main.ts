@@ -3,7 +3,7 @@ import { join } from "path";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import DBConnection from "./db/DBConnection";
+// import DBConnection from "./db/DBConnection";
 import WebsiteManager from "./db/Managers/WebsiteManager";
 import AccountManager from "./db/Managers/AccountManager";
 import SignedInByManager from "./db/Managers/SignedInByManager";
@@ -94,13 +94,9 @@ app.whenReady().then(() => {
 
 // ____________________________________________________________________
 
-const dbName = "database.sqlite";
-const dbPath = join(__dirname, "..", dbName);
-const db = DBConnection.getInstance(dbPath);
-
-const websiteManager = new WebsiteManager(db);
-const accountManager = new AccountManager(db);
-const signedInByManager = new SignedInByManager(db);
+const websiteManager = new WebsiteManager();
+const accountManager = new AccountManager();
+const signedInByManager = new SignedInByManager();
 
 // IPC HANDLERS
 

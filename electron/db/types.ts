@@ -8,6 +8,7 @@ export interface Website {
 
 export interface Account {
 	id?: number;
+	guid: string;
 	username: string;
 	password: string;
 	description?: string;

@@ -3,12 +3,16 @@ import { Database, RunResult } from "better-sqlite3";
 import { Account } from "../types";
 import { DatabaseError, OperationResult } from "../utils";
 import { decryptPassword, encryptPassword } from "../utils";
+import DBConnection from "../DBConnection";
+import { dbPath } from "../config";
+
+import { v4 as uuidV4 } from "uuid";
 
 class AccountManager {
 	private db: Database;
 
-	constructor(db: Database) {
-		this.db = db;
+	constructor() {
+		this.db = DBConnection.getInstance(dbPath);
 	}
 
 	public addAccount(account: Account): OperationResult {
@@ -16,9 +20,10 @@ class AccountManager {
 			this.validateAccount(account);
 			const encryptedPassword = encryptPassword(account.password);
 			const insert = this.db.prepare(
-				`INSERT INTO accounts (username, password, website_id, description) VALUES (?, ?, ?, ?)`
+				`INSERT INTO accounts (guid, username, password, website_id, description) VALUES (?, ?, ?, ?, ?)`
 			);
 			insert.run(
+				uuidV4(),
 				account.username,
 				encryptedPassword,
 				account.website_id,

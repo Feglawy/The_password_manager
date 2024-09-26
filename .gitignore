@@ -154,3 +154,5 @@ database.sqlite-shm
 database.sqlite-wal
 
 public/website_icons
+*.db-shm
+*.db-wal
