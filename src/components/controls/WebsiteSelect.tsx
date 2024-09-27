@@ -1,6 +1,7 @@
 import Select, { components, OptionProps, SingleValue } from "react-select";
 import { Website as IWebsite } from "../electron";
 import "../../styles/Select.css";
+import defaultWebsiteIcon from "/world-wide-web.svg";
 
 interface WebsiteOption {
 	value: string;
@@ -42,7 +43,7 @@ const WebsiteSelect: React.FC<WebsiteSelectProps> = ({
 	const formattedOptions = options.map((website) => ({
 		value: website.id!.toString(),
 		label: website.name,
-		iconPath: website.icon || "world-wide-web.svg",
+		iconPath: website.icon || defaultWebsiteIcon,
 	}));
 
 	return (

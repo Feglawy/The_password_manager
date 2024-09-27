@@ -11,6 +11,8 @@ import ConfirmationPopup from "../ConfirmationPopup";
 import AccountForm from "../Forms/AccountForm";
 import SignedInByForm from "../Forms/SignedInByForm";
 
+import defaultWebsiteIcon from "/world-wide-web.svg";
+
 interface WebsiteDataProps {
 	data: IWebsite;
 }
@@ -97,7 +99,7 @@ const WebsiteData = (props: WebsiteDataProps) => {
 			<div style={{ position: "relative" }}>
 				<ExternalLink href={websiteState.url || ""}>
 					<img
-						src={websiteState.icon || "world-wide-web.svg"}
+						src={websiteState.icon || defaultWebsiteIcon}
 						style={{ width: "256px", borderRadius: "38%/40%" }}
 					/>
 				</ExternalLink>

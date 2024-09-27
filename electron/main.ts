@@ -52,7 +52,7 @@ function createWindow() {
 		},
 	});
 
-	win.setMenu(null);
+	// win.setMenu(null);
 
 	win.webContents.setWindowOpenHandler(({ url }) => {
 		// open url in a browser and prevent default

@@ -1,5 +1,6 @@
 import "../../styles/Website.css";
 import { Link } from "react-router-dom";
+import defaultWebsiteIcon from "/world-wide-web.svg";
 
 interface WebsiteProps {
 	id: number;
@@ -12,7 +13,7 @@ const Website = ({ id, websiteName, websiteLogoSrc }: WebsiteProps) => {
 		<>
 			<Link className="website" to={`/${id}`}>
 				<div className="website-logo">
-					<img src={websiteLogoSrc || "world-wide-web.svg"} alt={websiteName} />
+					<img src={websiteLogoSrc || defaultWebsiteIcon} alt={websiteName} />
 				</div>
 				<div className="website-name">{websiteName}</div>
 			</Link>

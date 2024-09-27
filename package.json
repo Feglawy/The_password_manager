@@ -1,11 +1,14 @@
 {
 	"name": "the-password-manager",
 	"private": true,
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"type": "commonjs",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build && electron-builder",
+		"build": "tsc && vite build",
+		"build:win": "npm run build && electron-builder --win --config",
+		"build:mac": "npm run build && electron-builder --mac --config",
+		"build:linux": "npm run build && electron-builder --linux --config",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview",
 		"rebuild": "electron-rebuild -f -w better-sqlite3"
@@ -21,6 +24,7 @@
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.26.0",
 		"react-select": "^5.8.1",
+		"request": "^2.88.2",
 		"uuid": "^10.0.0"
 	},
 	"devDependencies": {

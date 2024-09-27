@@ -1,6 +1,7 @@
 import path = require("path");
 import fs = require("fs");
 import { dialog } from "electron";
+import { userDataPath } from "./db/config";
 
 export const openImageFileDialog = async () => {
 	const result = await dialog.showOpenDialog({
@@ -31,12 +32,7 @@ export const openDirPathDialog = async () => {
 export const saveImage = (filePath: string) => {
 	try {
 		// Construct the destination folder relative to the current working directory
-		const destinationFolder = path.join(
-			__dirname,
-			"..",
-			"public",
-			"website_icons"
-		);
+		const destinationFolder = path.join(userDataPath, "website_icons");
 
 		// Extract the file name from the file path
 		const fileName = path.basename(filePath);
@@ -59,4 +55,44 @@ export const saveImage = (filePath: string) => {
 		console.error("Error saving image:", error);
 		return null;
 	}
+};
+
+export const fetchWebsiteIcon = (
+	hostname: string,
+	savePath: string
+): Promise<void> => {
+	return new Promise((resolve, reject) => {
+		const request = require("request");
+		const options = {
+			method: "GET",
+			url: `https://logo.clearbit.com/${hostname}?format=png&size=200`,
+			headers: {},
+		};
+
+		request(options)
+			.on(
+				"response",
+				(response: {
+					statusCode: number;
+					pipe: (arg0: fs.WriteStream) => void;
+				}) => {
+					if (response.statusCode === 200) {
+						// Create a writable stream to save the image
+						const fileStream = fs.createWriteStream(savePath);
+						response.pipe(fileStream);
+
+						// Resolve the promise when the file is finished writing
+						fileStream.on("finish", () => {
+							fileStream.close();
+							resolve();
+						});
+					} else {
+						reject(new Error(`Error fetching icon: ${response.statusCode}`));
+					}
+				}
+			)
+			.on("error", (err: any) => {
+				reject(err);
+			});
+	});
 };

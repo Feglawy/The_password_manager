@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { defineConfig } from "vite";
 import path from "node:path";
 import electron from "vite-plugin-electron/simple";
@@ -23,11 +24,12 @@ export default defineConfig({
 			renderer:
 				process.env.NODE_ENV === "test"
 					? // https://github.com/electron-vite/vite-plugin-electron-renderer/issues/78#issuecomment-2053600808
-					undefined
+					  undefined
 					: {},
 		}),
 	],
 	server: {
 		port: 3000,
 	},
+	base: "./",
 });

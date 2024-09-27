@@ -20,7 +20,7 @@ declare namespace NodeJS {
 		VITE_PUBLIC: string;
 
 		// the secret key for encode/decode passwords
-		SECRET_KEY: string;
+		VITE_SECRET_KEY: string;
 	}
 }
 

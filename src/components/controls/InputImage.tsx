@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/InputImage.css";
+import defaultWebsiteIcon from "/world-wide-web.svg";
 
 interface InputImageProps {
 	initialValue?: string;
@@ -62,7 +63,10 @@ const InputImage = ({
 						}}
 					/>
 				) : (
-					<div id="default-icon"></div>
+					<div
+						id="default-icon"
+						style={{ backgroundImage: defaultWebsiteIcon }}
+					></div>
 				)}
 			</div>
 		</div>

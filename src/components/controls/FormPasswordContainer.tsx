@@ -1,5 +1,8 @@
 import { useRef } from "react";
 import Input from "./Input";
+import Eye from "/eye.svg";
+import EyeSlash from "/hidden.svg";
+import Shuffle from "/shuffle.svg";
 
 import "../../styles/PasswordContainer.css";
 
@@ -18,10 +21,10 @@ const FormPasswordContainer = ({ ...props }: PasswordContainerProps) => {
 		}
 		if (PasswordInputRef.current.type === "password") {
 			PasswordInputRef.current.type = "text";
-			EyeImgReg.current.src = "./hidden.svg";
+			EyeImgReg.current.src = EyeSlash;
 		} else {
 			PasswordInputRef.current.type = "password";
-			EyeImgReg.current.src = "./eye.svg";
+			EyeImgReg.current.src = Eye;
 		}
 	};
 
@@ -68,10 +71,10 @@ const FormPasswordContainer = ({ ...props }: PasswordContainerProps) => {
 				{...props}
 			/>
 			<span onClick={TogglePasswordVisability}>
-				<img src="/eye.svg" width="48px" height="48px" ref={EyeImgReg} />
+				<img src={Eye} width="48px" height="48px" ref={EyeImgReg} />
 			</span>
 			<span onClick={GenereteRandomPassword}>
-				<img src="/shuffle.svg" width="48px" height="48px" />
+				<img src={Shuffle} width="48px" height="48px" />
 			</span>
 		</div>
 	);

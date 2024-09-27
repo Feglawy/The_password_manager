@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/App.css";
 import SideBar from "./components/SideBar";
 import TopBar from "./components/TopBar/TopBar";
-import Accounts from "./components/Home";
+import Home from "./components/Home";
 import Add from "./components/AddNew/Add";
 import Error from "./components/Error";
 import WebsiteRegisteredPasswords from "./components/Website/WebsiteRegisteredPasswords";
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
 		path: "",
 		element: (
 			<Layout>
-				<Accounts />
+				<Home />
 			</Layout>
 		),
 		errorElement: (

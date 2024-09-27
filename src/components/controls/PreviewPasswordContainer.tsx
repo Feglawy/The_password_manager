@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import Input from "./Input";
+import Eye from "/eye.svg";
+import EyeSlash from "/hidden.svg";
 
 interface PasswordContainer {
 	value?: string;
@@ -16,10 +18,10 @@ const PasswordContainer = ({ value, className }: PasswordContainer) => {
 		}
 		if (PasswordInputRef.current.type === "password") {
 			PasswordInputRef.current.type = "text";
-			EyeImgReg.current.src = "./hidden.svg";
+			EyeImgReg.current.src = EyeSlash;
 		} else {
 			PasswordInputRef.current.type = "password";
-			EyeImgReg.current.src = "./eye.svg";
+			EyeImgReg.current.src = Eye;
 		}
 	};
 
@@ -42,7 +44,7 @@ const PasswordContainer = ({ value, className }: PasswordContainer) => {
 				value={value}
 			/>
 			<span onClick={TogglePasswordVisability}>
-				<img src="/eye.svg" width="48px" height="48px" ref={EyeImgReg} />
+				<img src={Eye} width="48px" height="48px" ref={EyeImgReg} />
 			</span>
 		</div>
 	);

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../styles/SearchBar.css";
 import { Website } from "../electron";
 import { useNavigate } from "react-router-dom";
+import defaultWebsiteIcon from "/world-wide-web.svg";
 
 const SearchBar = () => {
 	const navigate = useNavigate();
@@ -103,7 +104,7 @@ const SearchBar = () => {
 										marginRight: 10,
 										borderRadius: "8px",
 									}}
-									src={suggestion.icon || "world-wide-web.svg"}
+									src={suggestion.icon || defaultWebsiteIcon}
 									alt={suggestion.name}
 								/>
 								{suggestion.name.toUpperCase()}
