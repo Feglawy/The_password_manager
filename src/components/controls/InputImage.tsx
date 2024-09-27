@@ -63,10 +63,9 @@ const InputImage = ({
 						}}
 					/>
 				) : (
-					<div
-						id="default-icon"
-						style={{ backgroundImage: defaultWebsiteIcon }}
-					></div>
+					<div>
+						<img src={defaultWebsiteIcon} alt="" id="default-icon" />
+					</div>
 				)}
 			</div>
 		</div>
