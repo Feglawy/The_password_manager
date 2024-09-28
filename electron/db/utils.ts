@@ -1,4 +1,7 @@
 import { AES, enc } from "crypto-ts";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const bcrypt = require("bcrypt");
+
 import { secretKey } from "./config";
 // a custom error for database-related issues
 export class DatabaseError extends Error {
@@ -14,6 +17,20 @@ export interface OperationResult<T = null> {
 	message: string;
 	data?: T;
 }
+
+export const hashString = async (str: string): Promise<string> => {
+	const saltRounds = 10;
+	const hashedString = await bcrypt.hash(str, saltRounds);
+	return hashedString;
+};
+
+export const compareHashes = async (
+	stringToCompare: string,
+	hash: string
+): Promise<boolean> => {
+	const match = await bcrypt.compare(stringToCompare, hash);
+	return match;
+};
 
 export const encryptPassword = (password: string): string => {
 	if (!secretKey) {

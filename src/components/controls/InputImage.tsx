@@ -7,6 +7,7 @@ import WorkingOnIt from "../WorkingOnIt";
 interface InputImageProps {
 	initialValue?: string;
 	onImageSelect: (file: string | null) => void;
+	url?: string;
 	resetImage: boolean;
 }
 
@@ -14,11 +15,22 @@ const InputImage = ({
 	initialValue,
 	onImageSelect,
 	resetImage,
+	url,
 }: InputImageProps) => {
 	const imagePreviewRef = useRef<HTMLImageElement | null>(null);
 	const [imageSrc, setImageSrc] = useState<string | null>(null);
 
 	const [workingOnItModal, setWorkingOnItModal] = useState(false);
+
+	const getHostname = (url: string) => {
+		try {
+			const urlObj = new URL(url);
+			const hostname = urlObj.hostname;
+			return hostname;
+		} catch (error) {
+			console.error(`Please provide a prober url`);
+		}
+	};
 
 	const openImageDialog = async () => {
 		const filePath = await window.api.openImageFileDialog();
@@ -42,7 +54,15 @@ const InputImage = ({
 	}, [initialValue]);
 
 	const suggestIcon = () => {
-		setWorkingOnItModal(true);
+		// setWorkingOnItModal(true);
+		if (url) {
+			const hostname = getHostname(url);
+			const img = `https://logo.clearbit.com/${hostname}?format=png&size=200`;
+			setImageSrc(img);
+			onImageSelect(img);
+		} else {
+			console.log(`url is not defined`);
+		}
 	};
 
 	const clearInput = () => {

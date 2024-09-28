@@ -14,6 +14,7 @@
 		"rebuild": "electron-rebuild -f -w better-sqlite3"
 	},
 	"dependencies": {
+		"bcrypt": "^5.1.1",
 		"better-sqlite3": "^11.1.2",
 		"crypto-ts": "^1.0.2",
 		"csv-parser": "^3.0.0",
@@ -28,10 +29,12 @@
 		"uuid": "^10.0.0"
 	},
 	"devDependencies": {
+		"@types/bcrypt": "^5.0.2",
 		"@types/better-sqlite3": "^7.6.11",
 		"@types/json2csv": "^5.0.7",
 		"@types/react": "^18.2.64",
 		"@types/react-dom": "^18.2.21",
+		"@types/request": "^2.48.12",
 		"@types/uuid": "^10.0.0",
 		"@typescript-eslint/eslint-plugin": "^7.1.1",
 		"@typescript-eslint/parser": "^7.1.1",

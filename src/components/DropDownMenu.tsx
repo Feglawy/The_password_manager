@@ -41,7 +41,7 @@ const DropDownMenu = ({ items }: DropDownProps) => {
 				style={{ top: "10px", zIndex: "1000" }}
 			>
 				{items.map((item, index) => (
-					<button
+					<div
 						key={index}
 						className="dropdown-menu-button"
 						onClick={() => {
@@ -50,11 +50,10 @@ const DropDownMenu = ({ items }: DropDownProps) => {
 						style={{
 							listStyle: "none",
 							cursor: "pointer",
-
 						}}
 					>
 						{item.label}
-					</button>
+					</div>
 				))}
 			</div>
 		</div>

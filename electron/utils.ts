@@ -2,6 +2,7 @@ import path = require("path");
 import fs = require("fs");
 import { dialog } from "electron";
 import { userDataPath } from "./db/config";
+// import request from "request-promise-native";
 
 export const openImageFileDialog = async () => {
 	const result = await dialog.showOpenDialog({
@@ -57,42 +58,39 @@ export const saveImage = (filePath: string) => {
 	}
 };
 
-export const fetchWebsiteIcon = (
-	hostname: string,
-	savePath: string
-): Promise<void> => {
-	return new Promise((resolve, reject) => {
-		const request = require("request");
-		const options = {
-			method: "GET",
-			url: `https://logo.clearbit.com/${hostname}?format=png&size=200`,
-			headers: {},
-		};
+// export const fetchWebsiteIcon = (callback: Buffer, hostname: string) => {
+// 	const options = {
+// 		method: "GET",
+// 		url: `https://logo.clearbit.com/${hostname}?format=png&size=200`,
+// 		encoding: null, // Important to handle binary data (PNG)
+// 	};
 
-		request(options)
-			.on(
-				"response",
-				(response: {
-					statusCode: number;
-					pipe: (arg0: fs.WriteStream) => void;
-				}) => {
-					if (response.statusCode === 200) {
-						// Create a writable stream to save the image
-						const fileStream = fs.createWriteStream(savePath);
-						response.pipe(fileStream);
+// 	request(options, function (error, response, body) {
+// 		if (error) {
+// 			throw new Error(error);
+// 		}
+// 		// Call the callback with the body (image buffer) once the request is complete
+// 		callback(body);
+// 	});
+// };
 
-						// Resolve the promise when the file is finished writing
-						fileStream.on("finish", () => {
-							fileStream.close();
-							resolve();
-						});
-					} else {
-						reject(new Error(`Error fetching icon: ${response.statusCode}`));
-					}
-				}
-			)
-			.on("error", (err: any) => {
-				reject(err);
-			});
-	});
-};
+// // Function to convert Buffer to Base64
+// export const previewImageBase64 = (imageBuffer: Buffer): string => {
+// 	return `data:image/png;base64,${imageBuffer.toString("base64")}`;
+// };
+
+// // Function to save the image to a file
+// export const saveImageToFile = (
+// 	imageBuffer: Buffer,
+// 	filePath: string
+// ): Promise<void> => {
+// 	return new Promise((resolve, reject) => {
+// 		fs.writeFile(filePath, imageBuffer, (err) => {
+// 			if (err) {
+// 				reject(err);
+// 			} else {
+// 				resolve();
+// 			}
+// 		});
+// 	});
+// };

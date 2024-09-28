@@ -5,6 +5,7 @@ import Button from "../controls/Button";
 import "../../styles/utils.css";
 import { useNotification } from "../../context/NotificationContext";
 import { Website as IWebsite } from "../electron";
+import { isValidUrl } from "../../Utils";
 
 interface WebsiteFormProps {
 	initialData?: IWebsite;
@@ -65,9 +66,18 @@ const WebsiteForm = ({
 		e.preventDefault();
 		// Check if an image is provided
 		if (image) {
-			window.api.saveFile(image).then((imagePath) => {
-				handleAddingWebsite(imagePath);
-			});
+			if (isValidUrl(image)) {
+				handleAddingWebsite(image); // If it's a valid URL, directly pass it
+			} else {
+				window.api
+					.saveFile(image)
+					.then((imagePath) => {
+						handleAddingWebsite(imagePath); // If it's not a URL, save the image
+					})
+					.catch(() => {
+						addNotification("error", "Error saving the image.");
+					});
+			}
 		} else {
 			addNotification("warning", "No image provided.");
 			handleAddingWebsite(null);
@@ -92,6 +102,7 @@ const WebsiteForm = ({
 				initialValue={image || undefined}
 				onImageSelect={handleImageSelect}
 				resetImage={resetImage}
+				url={websiteLink}
 			/>
 
 			<Input
