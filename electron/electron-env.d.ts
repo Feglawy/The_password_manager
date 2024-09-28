@@ -20,7 +20,7 @@ declare namespace NodeJS {
 		VITE_PUBLIC: string;
 
 		// the secret key for encode/decode passwords
-		VITE_SECRET_KEY: string;
+		SECRET_KEY: string;
 	}
 }
 
@@ -91,6 +91,9 @@ interface API {
 	exportAsCsv: (dirPath: string) => Promise<OperationResult>;
 	openDirDialog: () => Promise<string | null>;
 	openCsvDialog: () => Promise<string | null>;
+	fetchWebsiteIcon: (hostname: string) => Promise<Buffer>;
+	previewImage: (imageBuffer: Buffer) => string;
+	saveImageBuffer: (imageBuffer: Buffer, filePath: string) => Promise<void>;
 }
 
 // Used in Renderer process, expose in `preload.ts`

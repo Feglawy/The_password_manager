@@ -4,7 +4,7 @@ import { join } from "path";
 
 dotenv.config();
 
-export const secretKey = process.env.VITE_SECRET_KEY;
+export const secretKey = process.env.SECRET_KEY;
 
 export const userDataPath = app.getPath("userData");
 export const dbName = "database.db";

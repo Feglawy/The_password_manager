@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/InputImage.css";
 import defaultWebsiteIcon from "/world-wide-web.svg";
+import DropDownMenu from "../DropDownMenu";
+import WorkingOnIt from "../WorkingOnIt";
 
 interface InputImageProps {
 	initialValue?: string;
@@ -15,6 +17,8 @@ const InputImage = ({
 }: InputImageProps) => {
 	const imagePreviewRef = useRef<HTMLImageElement | null>(null);
 	const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+	const [workingOnItModal, setWorkingOnItModal] = useState(false);
 
 	const openImageDialog = async () => {
 		const filePath = await window.api.openImageFileDialog();
@@ -37,14 +41,31 @@ const InputImage = ({
 		onImageSelect(initialValue || null);
 	}, [initialValue]);
 
+	const suggestIcon = () => {
+		setWorkingOnItModal(true);
+	};
+
+	const clearInput = () => {
+		setImageSrc(null);
+	};
+
+	const inputImageControls = [
+		{ label: "Suggest icon", onClick: suggestIcon },
+		{ label: "Clear icon", onClick: clearInput },
+	];
+
 	return (
 		<div
 			style={{
+				position: "relative",
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "center",
 			}}
 		>
+			<div style={{ position: "absolute", top: "0", left: "256px" }}>
+				<DropDownMenu items={inputImageControls} />
+			</div>
 			<div
 				id="website-icon"
 				onClick={openImageDialog}
@@ -54,7 +75,7 @@ const InputImage = ({
 					<img
 						id="image-preview"
 						ref={imagePreviewRef}
-						src={`file:///${imageSrc}`}
+						src={`${imageSrc}`}
 						alt="Image Preview"
 						style={{
 							height: "128px",
@@ -67,6 +88,12 @@ const InputImage = ({
 						<img src={defaultWebsiteIcon} alt="" id="default-icon" />
 					</div>
 				)}
+				<WorkingOnIt
+					isOpen={workingOnItModal}
+					onClose={() => {
+						setWorkingOnItModal(false);
+					}}
+				/>
 			</div>
 		</div>
 	);
