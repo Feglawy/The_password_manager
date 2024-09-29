@@ -20,18 +20,28 @@ const Home = () => {
 
 	return (
 		<div className="main-content">
-			{websites.length === 0 ? (
-				<h1>No websites available</h1>
-			) : (
-				websites.map((website) => (
-					<Website
-						key={website.id}
-						id={website.id!}
-						websiteName={website.name}
-						websiteLogoSrc={website.icon}
-					/>
-				))
-			)}
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					flexWrap: "wrap",
+					alignItems: "center",
+					alignContent: "center",
+				}}
+			>
+				{websites.length === 0 ? (
+					<h1>No websites available</h1>
+				) : (
+					websites.map((website) => (
+						<Website
+							key={website.id}
+							id={website.id!}
+							websiteName={website.name}
+							websiteLogoSrc={website.icon}
+						/>
+					))
+				)}
+			</div>
 		</div>
 	);
 };

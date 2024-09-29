@@ -24,26 +24,35 @@ function Add() {
 
 	return (
 		<div className="main-content">
-			<RadioInputs>
-				<RadioInput
-					name="Website"
-					onClick={() => {
-						openModal("website");
-					}}
-				/>
-				<RadioInput
-					name="Account"
-					onClick={() => {
-						openModal("account");
-					}}
-				/>
-				<RadioInput
-					name="Signed In By"
-					onClick={() => {
-						openModal("signedInBy");
-					}}
-				/>
-			</RadioInputs>
+			<div
+				style={{
+					alignItems: "center",
+					height: "100%",
+					display: "flex",
+					justifyContent: "center",
+				}}
+			>
+				<RadioInputs>
+					<RadioInput
+						name="Website"
+						onClick={() => {
+							openModal("website");
+						}}
+					/>
+					<RadioInput
+						name="Account"
+						onClick={() => {
+							openModal("account");
+						}}
+					/>
+					<RadioInput
+						name="Signed In By"
+						onClick={() => {
+							openModal("signedInBy");
+						}}
+					/>
+				</RadioInputs>
+			</div>
 			<ModalPopUp
 				isOpen={selectedForm === "account"}
 				onClose={() => closeModal()}
