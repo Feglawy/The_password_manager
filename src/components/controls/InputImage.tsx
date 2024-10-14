@@ -46,7 +46,7 @@ const InputImage = ({
 			setImageSrc(null);
 			onImageSelect(null);
 		}
-	}, [resetImage, onImageSelect]);
+	}, [resetImage]);
 
 	useEffect(() => {
 		setImageSrc(initialValue || null);
@@ -67,6 +67,7 @@ const InputImage = ({
 
 	const clearInput = () => {
 		setImageSrc(null);
+		onImageSelect(null);
 	};
 
 	const inputImageControls = [
