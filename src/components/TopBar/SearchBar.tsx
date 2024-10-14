@@ -63,6 +63,16 @@ const SearchBar = () => {
 					setSuggestions([]); // Close suggestions list
 				}
 			}
+
+			// Scroll the active suggestion into view
+			const activeSuggestionElement = document.querySelector(
+				`.suggestions li.active`
+			);
+			if (activeSuggestionElement) {
+				activeSuggestionElement.scrollIntoView({
+					block: "end",
+				});
+			}
 		}
 	};
 
