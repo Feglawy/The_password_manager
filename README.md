@@ -4,7 +4,7 @@
 
 The Password Manager is a secure and user-friendly application that allows users to store and manage their passwords efficiently. Built with modern web technologies, it ensures data security with SQLite3.
 
-## Features
+## 🚀 Features
 
 - **Secure Storage**: Passwords are stored securely using SQLite3.
 - **User-Friendly Interface**: Built with React for a responsive and intuitive user experience.
@@ -12,10 +12,10 @@ The Password Manager is a secure and user-friendly application that allows users
 
 ## Prerequisites
 
-- Node.js (version >= 14.x)
+- Node.js (version >= 20.x)
 - npm (Node Package Manager)
 
-## How to Configure and Build the Project
+## 🚦 How to Configure and Build the Project
 
 1. **Create a `.env` File**: Store your `SECRET_KEY` in the `.env` file for secure access.
 
@@ -47,7 +47,7 @@ The Password Manager is a secure and user-friendly application that allows users
    npm run build:Your-OS
    ```
 
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 The_password_manager/
@@ -80,3 +80,11 @@ The_password_manager/
 │   └── utils.tsx                  # Utility functions for the React app
 └── .env                           # Environment variables for the application
 ```
+
+## 📝 License
+
+This project is open source and available under the [AGPL-3.0 License](LICENSE).
+
+## ⭐️ Show your support
+
+If this project helped you, please consider giving it a ⭐️!
