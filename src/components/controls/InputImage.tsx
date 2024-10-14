@@ -73,6 +73,12 @@ const InputImage = ({
 		onImageSelect(img);
 	};
 
+	const handleImageError = (
+		e: React.SyntheticEvent<HTMLImageElement, Event>
+	) => {
+		e.currentTarget.src = defaultWebsiteIcon;
+	};
+
 	const clearInput = () => {
 		setImageSrc(null);
 		onImageSelect(null);
@@ -111,6 +117,7 @@ const InputImage = ({
 							width: "128px",
 							borderRadius: "38% / 40%",
 						}}
+						onError={handleImageError}
 					/>
 				) : (
 					<div>

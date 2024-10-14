@@ -87,6 +87,12 @@ const WebsiteData = (props: WebsiteDataProps) => {
 		{ label: "Delete", onClick: OpenDeleteConfirmation },
 	];
 
+	const handleImageError = (
+		e: React.SyntheticEvent<HTMLImageElement, Event>
+	) => {
+		e.currentTarget.src = defaultWebsiteIcon;
+	};
+
 	return (
 		<div
 			style={{
@@ -101,6 +107,7 @@ const WebsiteData = (props: WebsiteDataProps) => {
 					<img
 						src={websiteState.icon || defaultWebsiteIcon}
 						style={{ width: "256px", borderRadius: "38%/40%" }}
+						onError={handleImageError}
 					/>
 				</ExternalLink>
 				<div style={{ position: "absolute", top: "0", left: "256px" }}>
