@@ -32,7 +32,7 @@
 	font-weight: 200;
 	letter-spacing: 2px;
 	opacity: 0;
-	max-height: 0;
+	/* max-height: 0; */
 	transition: all 0.3s ease;
 	overflow: hidden; /* Ensure text doesn't overflow */
 	white-space: nowrap; 
