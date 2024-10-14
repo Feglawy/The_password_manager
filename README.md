@@ -35,10 +35,16 @@ The Password Manager is a secure and user-friendly application that allows users
    npm run rebuild
    ```
 
-4. **Start the Development Server**: Launch the application in development mode.
+4. **Start the Development**: Launch the application in development mode.
 
    ```bash
    npm run dev
+   ```
+
+5. **Build the App**: Builds the for your os (win, mac, linux)
+
+   ```bash
+   npm run build:Your-OS
    ```
 
 ## Project Structure
