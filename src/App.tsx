@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./styles/App.css";
 import SideBar from "./components/SideBar";
 import TopBar from "./components/TopBar/TopBar";
@@ -26,9 +26,9 @@ const Layout = ({ children }: LayoutProps) => {
 	);
 };
 
-const router = createBrowserRouter([
+const router = createHashRouter([
 	{
-		path: "",
+		path: "/",
 		element: (
 			<Layout>
 				<Home />
