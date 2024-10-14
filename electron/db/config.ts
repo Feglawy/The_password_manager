@@ -2,11 +2,18 @@ import { app } from "electron";
 import dotenv from "dotenv";
 import { join } from "path";
 
-dotenv.config();
+const isDevelopment =
+	process.env.NODE_ENV === "development" || process.defaultApp;
 
-export const secretKey = process.env.SECRET_KEY;
+if (isDevelopment) dotenv.config();
+
+export const secretKey = isDevelopment
+	? process.env.SECRET_KEY
+	: "Your_secret_key"; // set secret key for production
 
 export const userDataPath = app.getPath("userData");
 export const dbName = "database.db";
 
-export const dbPath = join(userDataPath, dbName);
+export const dbPath = isDevelopment
+	? join(__dirname, "..", dbName)
+	: join(userDataPath, dbName);
