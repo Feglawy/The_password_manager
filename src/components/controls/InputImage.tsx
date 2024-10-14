@@ -25,10 +25,15 @@ const InputImage = ({
 	const getHostname = (url: string) => {
 		try {
 			const urlObj = new URL(url);
+			if (!["http:", "https:"].includes(urlObj.protocol)) {
+				throw new Error("Invalid protocol. Must be http or https.");
+			}
+
 			const hostname = urlObj.hostname;
 			return hostname;
 		} catch (error) {
 			console.error(`Please provide a prober url`);
+			return null;
 		}
 	};
 
@@ -55,14 +60,17 @@ const InputImage = ({
 
 	const suggestIcon = () => {
 		// setWorkingOnItModal(true);
-		if (url) {
-			const hostname = getHostname(url);
-			const img = `https://logo.clearbit.com/${hostname}?format=png&size=200`;
-			setImageSrc(img);
-			onImageSelect(img);
-		} else {
+		if (!url) {
 			console.log(`url is not defined`);
+			return;
 		}
+		const hostname = getHostname(url);
+		if (!hostname) {
+			return;
+		}
+		const img = `https://logo.clearbit.com/${hostname}?format=png&size=200`;
+		setImageSrc(img);
+		onImageSelect(img);
 	};
 
 	const clearInput = () => {
