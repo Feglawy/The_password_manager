@@ -5,15 +5,15 @@ import fs from "fs";
 import path from "path";
 import csvParser from "csv-parser";
 
-import DBConnection from "./DBConnection";
-import { dbPath } from "./config";
-import { Website } from "./types";
+import DBConnection from "../DBConnection";
+import { dbPath } from "../config";
+import { Website } from "../types";
 import {
 	DatabaseError,
 	decryptPassword,
 	encryptPassword,
 	extractWebsitename,
-} from "./utils";
+} from "../utils";
 
 interface BrowserCSVFormat {
 	url: string;

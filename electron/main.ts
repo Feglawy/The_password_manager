@@ -15,7 +15,7 @@ import {
 	openImageFileDialog,
 	saveImage,
 } from "./utils";
-import { exportToCsv, importFromCsv } from "./db/csvManager";
+import { exportToCsv, importFromCsv } from "./db/Managers/csvManager";
 
 // The built directory structure
 //
@@ -32,6 +32,8 @@ process.env.APP_ROOT = join(__dirname, "..");
 export const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 export const MAIN_DIST = join(process.env.APP_ROOT, "dist-electron");
 export const RENDERER_DIST = join(process.env.APP_ROOT, "dist");
+const isDevelopment =
+	process.env.NODE_ENV === "development" || process.defaultApp;
 
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
 	? join(process.env.APP_ROOT, "public")
@@ -52,7 +54,7 @@ function createWindow() {
 		},
 	});
 
-	// win.setMenu(null);
+	if (!isDevelopment) win.setMenu(null);
 
 	win.webContents.setWindowOpenHandler(({ url }) => {
 		// open url in a browser and prevent default
