@@ -6,7 +6,7 @@
 	directories: {
 		output: "release/${version}",
 	},
-	files: ["dist", "dist-electron", ".env"],
+	files: ["dist", "dist-electron"],
 	extraResources: [
 		{
 			from: "./public/",
