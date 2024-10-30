@@ -94,6 +94,7 @@ const SearchBar = () => {
 					type="text"
 					// placeholder="Searching for something?"
 					value={searchTerm}
+					onFocus={fetchWebsites}
 					onChange={handleInputChange}
 					onKeyDown={handleKeyDown} // Handle key events
 					onBlur={onBlur}
