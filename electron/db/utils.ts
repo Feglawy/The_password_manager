@@ -1,6 +1,6 @@
 import { AES, enc } from "crypto-ts";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 import { secretKey } from "./config";
 // a custom error for database-related issues
